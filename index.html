@@ -396,27 +396,26 @@ class Component extends DCLogic {
   later(fn, ms) { this.timers.push(setTimeout(fn, ms)); }
   renderVals() {
     const S = this.state;
-    const B = (id) => '/_blob/' + id;
     const P = {
       gown: { name: 'Isolation Gowns, AAMI Level 2, Universal Size, Yellow', sku: 'DEM-1004', mfr: 'Demo Manufacturer01', mfrEmail: 'samples@demomanufacturer01.com', pack: '10 per pack',
-        imgs: [B('fa4bd49f938b38e1422cb2aa4d29660a'), B('d7ae03ce70f04cb5e7ddcca16aff75e6'), B('8dd5d75cc803aef95b1304bf299a3bf1')],
-        docs: { spec: ['DEM-1004 product sheet.pdf', B('df0aefb48b256031393a643719f24b92')], sds: ['DEM-1004 safety data sheet.pdf', B('6be9f78ede1de4ddfac96225bbb6da12')], video: B('7c8fdee5852c10193e440a756d30ded7') },
+        imgs: ['./assets/fa4bd49f938b38e1422cb2aa4d29660a.webp', './assets/d7ae03ce70f04cb5e7ddcca16aff75e6.webp', './assets/8dd5d75cc803aef95b1304bf299a3bf1.webp'],
+        docs: { spec: ['DEM-1004 product sheet.pdf', './assets/df0aefb48b256031393a643719f24b92.webp'], sds: ['DEM-1004 safety data sheet.pdf', './assets/6be9f78ede1de4ddfac96225bbb6da12.webp'], video: './assets/7c8fdee5852c10193e440a756d30ded7.webp' },
         ai: 'it’s AAMI Level 2 rated like the current CLX-2004 gown, and adds elastic knit cuffs and a full-back overlap. Packed 10 per pack.',
         specs: [['$18.95', 'Proposed price'], ['10', 'Pkg qty'], ['Each', 'UoM'], ['Demo Manufacturer01', 'Brand'], ['USA', 'Country of origin'], ['N/A', 'NDC'], ['N/A', 'UPC'], ['In Stock', 'Material status'], ['SMS', 'Material'], ['AAMI PB70 Level 2', 'Protection level'], ['Universal', 'Size'], ['Yellow', 'Color']],
         certs: 'AAMI PB70 Level 2, FDA Registered, ISO 13485', cat: 'Infection Control / Personal Protection / Protective Apparel / Isolation Gowns',
         desc: 'Lightweight SMS isolation gowns rated AAMI PB70 Level 2 for low-to-moderate fluid exposure. Elastic knit cuffs, neck and waist ties, and a full-back overlap give complete coverage. Latex-free and single-use, ideal for dental procedures, exam rooms and isolation areas.',
         features: ['AAMI PB70 Level 2 for low-to-moderate fluid exposure', 'Elastic knit cuffs', 'Neck and waist ties', 'Full-back overlap for complete coverage', 'Latex-free, single-use'] },
       shield: { name: 'Disposable Face Shields, Full-Length, Anti-Fog', sku: 'DEM-1006', mfr: 'Demo Manufacturer01', mfrEmail: 'samples@demomanufacturer01.com', pack: '24 per pack',
-        imgs: [B('7ee783ae711b26ff4f01c799900cc5e9'), B('8f2902db04a25911db99e7940ddcf7eb'), B('a5c6709d477b813e76cad995394e08a2')],
-        docs: { spec: ['DEM-1006 product sheet.pdf', B('5723da2c25969e2f2fb666e35260d0d5')], sds: ['DEM-1006 safety data sheet.pdf', B('7ead5eef16dc88dd314f69f02014e328')], video: B('ba319e9149a9dccf21cace62683d1d85') },
+        imgs: ['./assets/7ee783ae711b26ff4f01c799900cc5e9.webp', './assets/8f2902db04a25911db99e7940ddcf7eb.webp', './assets/a5c6709d477b813e76cad995394e08a2.webp'],
+        docs: { spec: ['DEM-1006 product sheet.pdf', './assets/5723da2c25969e2f2fb666e35260d0d5.webp'], sds: ['DEM-1006 safety data sheet.pdf', './assets/7ead5eef16dc88dd314f69f02014e328.webp'], video: './assets/ba319e9149a9dccf21cace62683d1d85.webp' },
         ai: 'it’s full-length like the current CLX-2006 shield, and adds an anti-fog coating and a foam headband with an elastic strap. It fits over glasses, loupes and masks.',
         specs: [['$19.95', 'Proposed price'], ['24', 'Pkg qty'], ['Each', 'UoM'], ['Demo Manufacturer01', 'Brand'], ['USA', 'Country of origin'], ['N/A', 'NDC'], ['N/A', 'UPC'], ['In Stock', 'Material status'], ['Full-length', 'Length'], ['Anti-fog', 'Coating'], ['Eyes, nose and mouth', 'Coverage'], ['Foam, elastic strap', 'Headband']],
         certs: 'FDA Registered, ISO 13485', cat: 'Infection Control / Personal Protection / Eyewear & Face Shields / Face Shields',
         desc: 'Optically clear, full-length face shields that protect the eyes, nose and mouth from splash, spray and spatter. An anti-fog coating keeps vision clear, and the foam headband with elastic strap gives an all-day comfortable fit. Wearable over glasses, loupes and masks.',
         features: ['Protects eyes, nose and mouth from splash, spray and spatter', 'Anti-fog coating keeps vision clear', 'Foam headband with elastic strap for all-day comfort', 'Fits over glasses, loupes and masks'] },
       art: { name: 'Articaine HCl 4% with Epinephrine 1:100,000, 1.7 mL', sku: 'DEM-HV-ART4-100', mfr: 'Demo MFG 01', mfrEmail: 'samples@demomfg01.com', pack: '50 cartridges per box',
-        imgs: [B('fb97491a3b1e3358b30208813cb24b2c'), B('3ff95f59ee4c49acf6f79a094aedc517'), B('b37f5be9fd1911d12bb525a533d72bb9')],
-        docs: { spec: ['DEM-HV-ART4-100 product sheet.pdf', B('792d28f3f1574e04f440a1ba75bc5940')], sds: ['DEM-HV-ART4-100 SDS.pdf', B('dd2553a923d68bf2416370b7cac28d2a')], video: B('0fed6e7a1d0753a1ec174b7f6388ae8f') },
+        imgs: ['./assets/fb97491a3b1e3358b30208813cb24b2c.webp', './assets/3ff95f59ee4c49acf6f79a094aedc517.webp', './assets/b37f5be9fd1911d12bb525a533d72bb9.webp'],
+        docs: { spec: ['DEM-HV-ART4-100 product sheet.pdf', './assets/792d28f3f1574e04f440a1ba75bc5940.webp'], sds: ['DEM-HV-ART4-100 SDS.pdf', './assets/dd2553a923d68bf2416370b7cac28d2a.webp'], video: './assets/0fed6e7a1d0753a1ec174b7f6388ae8f.webp' },
         ai: 'it’s articaine 4% with epinephrine 1:100,000 in a 1.7 mL gold-band cartridge, the same as the current CLX-2010. It comes 50 per box with a latex-free plunger.',
         specs: [['$44.75', 'Proposed price'], ['50', 'Pkg qty'], ['BX', 'UoM'], ['Demo MFG 01', 'Brand'], ['Canada', 'Country of origin'], ['99207-0410-05', 'NDC'], ['850102001029', 'UPC'], ['Articaine HCl 40 mg/mL', 'Active ingredient'], ['Epinephrine 1:100,000', 'Vasoconstrictor'], ['1.7 mL', 'Fill volume'], ['Gold', 'Color band'], ['20–25 °C, protect from light', 'Storage']],
         certs: 'FDA Registered, GMP', cat: 'Anesthetics / Local Anesthetic Cartridges',
