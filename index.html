@@ -1,0 +1,542 @@
+<!doctype html>
+<meta charset="utf-8"><style data-dc-design-system-vars>@layer{:root{--primary:#21c5c4;--primary-hover:#158989;--orange:#ff8070;--ink:#333333;--body-text:#4f4f4f;--muted:#6c6c6c;--border-strong:#bdbdbd;--border:#e5e5e5;--surface-sunken:#f5f5f5;--surface:#ffffff;--background:#f3f5f5;--selected:#e1e4e4;--hover-tint:#a9e7e7;--widget-green:#21c594;--tint-red:#fff5f4;--tint-orange:#fef5ed;--secondary-hover:#ebebeb;--secondary-hover-orange:#ecf3f3;--status-approved:#27ae60;--status-ready:#2d9cdb;--status-processing:#f2994a;--status-illegible:#f2c94c;--status-reject:#eb5757;--status-invoice:#9b51e0;--substitute-yellow:#ffe70f;--selected-row:#caf1f0;--neutral-fill:#fcfcfc;--neutral-border-soft:#33333370;--input-border-soft:#e0e1e2;--placeholder-muted:#1b1c3199;--shadow-sidebar:4px 0px 12px 0px #25252514;--shadow-dropdown:0px 4px 4px 0px #00000040;--shadow-block:0px 4px 16px 0px #00000014;--space-2:2px;--space-8:8px;--space-9:9px;--space-10:10px;--space-12:12px;--space-16:16px;--space-20:20px;--space-24:24px;--space-40:40px;--space-64:64px;--radius-2:2px;--radius-4:4px;--radius-6:6px;--font-heading:'Comfortaa', sans-serif;--font-body:'Poppins', sans-serif;--text-h1:700 40px/1.3 var(--font-heading);--text-h2:700 32px/1.625 var(--font-heading);--text-h3:700 22px/1.5 var(--font-heading);--text-h4:700 20px/1 var(--font-heading);--text-h5:500 18px/1 var(--font-body);--text-h6:400 18px/1 var(--font-body);--text-subtitle-regular:400 16px/1.5 var(--font-body);--text-subtitle-medium:500 16px/1 var(--font-body);--text-body-regular:400 14px/22px var(--font-body);--text-body-medium:500 14px/22px var(--font-body);--text-body-link:400 14px/22px var(--font-body);--text-caption-regular:400 12px/22px var(--font-body);--text-caption-medium:500 12px/22px var(--font-body);}}</style>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Field Surface prototype</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&amp;family=Comfortaa:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#1f7f7c}a:hover{color:#155e5b}
+button,input,select,textarea{font-family:inherit}
+.menu-item{background:transparent;transition:background-color .12s}
+.menu-item:hover{background:#eef9f9}
+.menu-item:focus-visible{outline:2px solid #21c5c4;outline-offset:-2px}
+.kb-back{opacity:.3;transition:opacity .15s}
+.kb-back:hover,.kb-back:focus-visible{opacity:1}
+.kb-back:focus-visible{outline:2px solid #21c5c4}
+.lnk{border:0;background:transparent;padding:0;height:40px;color:#1f7f7c;text-decoration:underline;font-size:14px;cursor:pointer}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{animation:spin .9s linear infinite}
+@media (prefers-reduced-motion: reduce){.spin{animation-duration:2.4s}}
+</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; background: #ffffff; color: #333333; font-family: Arimo, Arial, Helvetica, sans-serif; box-sizing: border-box">
+
+<sc-if value="{{isWidget}}" hint-placeholder-val="{{ true }}">
+<div style="padding: 18px 20px 24px">
+<div style="max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; align-items: center; justify-content: center; gap: 16px"><h1 style="margin: 0; text-align: center; font-size: 30px; line-height: 1.2; font-weight: 700">Compare Competitive Products and Pricing</h1><button type="button" aria-label="Settings" style="width: 46px; height: 46px; flex: none; border: 1px solid #bdbdbd; border-radius: 4px; background: #ffffff; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4f4f4f" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M10.3 4.3a1.7 1.7 0 0 1 3.4 0 1.7 1.7 0 0 0 2.6 1.1 1.7 1.7 0 0 1 2.3 2.3 1.7 1.7 0 0 0 1.1 2.6 1.7 1.7 0 0 1 0 3.4 1.7 1.7 0 0 0-1.1 2.6 1.7 1.7 0 0 1-2.3 2.3 1.7 1.7 0 0 0-2.6 1.1 1.7 1.7 0 0 1-3.4 0 1.7 1.7 0 0 0-2.6-1.1 1.7 1.7 0 0 1-2.3-2.3 1.7 1.7 0 0 0-1.1-2.6 1.7 1.7 0 0 1 0-3.4 1.7 1.7 0 0 0 1.1-2.6 1.7 1.7 0 0 1 2.3-2.3 1.7 1.7 0 0 0 2.6-1.1z"></path></svg></button></div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center">
+<div style="width: 100%; display: flex; align-items: center; gap: 8px"><div style="flex: 1; height: 2px; background: {{s.lineL}}"></div><div style="width: 28px; height: 28px; flex: none; border-radius: 50%; background: {{s.dot}}; color: #ffffff; font-size: 13px; display: flex; align-items: center; justify-content: center">{{s.mark}}</div><div style="flex: 1; height: 2px; background: {{s.lineR}}"></div></div>
+<div style="font-size: 14px">{{s.label}}</div>
+</div>
+</sc-for>
+</div>
+
+<sc-if value="{{isUpload}}" hint-placeholder-val="{{ true }}">
+<div style="min-height: 420px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+<button type="button" onClick="{{openPicker}}" style="height: 48px; padding: 0 22px; border: 0; border-radius: 4px; background: #f3f3f3; color: #333333; font-size: 16px; cursor: pointer; display: flex; align-items: center; gap: 10px"><span aria-hidden="true" style="font-size: 22px; line-height: 1">+</span>Upload a File</button>
+<div style="font-size: 11px; font-weight: 700; color: #767676">Up to 25 files (100 MB total, 200 pages or less per file)</div>
+<sc-if value="{{hasFiles}}" hint-placeholder-val="{{ false }}"><div style="display: flex; flex-direction: column; align-items: center; gap: 8px; width: 100%"><div style="font-size: 15px"><b>{{fileCount}}</b> Files were uploaded</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px">
+<sc-for list="{{upFiles}}" as="f" hint-placeholder-count="2"><div style="display: flex; align-items: center; gap: 8px; padding: 4px 4px 4px 10px; border: 1px solid #e5e5e5; border-radius: 6px; font-size: 13px; background: #fafafa"><span style="padding: 2px 5px; border-radius: 3px; background: {{f.color}}; color: #ffffff; font-size: 10px; font-weight: 700">{{f.ext}}</span>{{f.name}}<button type="button" aria-label="Remove file" onClick="{{f.remove}}" style="width: 32px; height: 32px; border: 0; background: transparent; cursor: pointer; font-size: 16px; color: #595959">×</button></div></sc-for>
+</div></div></sc-if>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; color: #767676; font-size: 11px; font-weight: 700"><div style="flex: 1; height: 1px; background: #e5e5e5"></div>OR<div style="flex: 1; height: 1px; background: #e5e5e5"></div></div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<label for="srch" style="font-size: 16px; font-weight: 700">Search for a product</label>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<input id="srch" value="{{q}}" onChange="{{onQ}}" placeholder="Search by name, SKU, manufacturer, MPN…" style="flex: 1 1 280px; min-width: 0; height: 46px; box-sizing: border-box; padding: 0 14px; border: 1px solid #e0e0e0; border-radius: 6px; background: #f5f5f5; font-size: 14px; color: #333333">
+<button type="button" onClick="{{doSearch}}" style="flex: none; height: 46px; padding: 0 26px; border: 0; border-radius: 4px; background: {{searchBg}}; color: #ffffff; font-size: 16px; cursor: pointer">{{searchLabel}}</button>
+</div>
+<div style="font-size: 12px; color: #767676">Try FS-0918</div>
+</div>
+<sc-if value="{{hasRows}}" hint-placeholder-val="{{ false }}">
+<div style="border: 1px solid #e5e5e5; border-radius: 8px; overflow-x: auto">
+<div style="min-width: 640px">
+<div style="padding: 10px 14px; background: #fafafa; border-bottom: 1px solid #e5e5e5; font-size: 12px; color: #595959">Added · {{rowCount}}</div>
+<div style="display: grid; grid-template-columns: 110px 1fr 140px 1fr 40px; gap: 10px; padding: 10px 14px; font-size: 11px; color: #595959"><div>Current SKU</div><div>Current SKU Description</div><div>Proposed SKU</div><div>Proposed SKU Description</div><div></div></div>
+<sc-for list="{{sRows}}" as="r" hint-placeholder-count="1">
+<div style="display: grid; grid-template-columns: 110px 1fr 140px 1fr 40px; gap: 10px; align-items: center; padding: 10px 14px; background: #f4f4f4; font-size: 13px"><div>{{r.sku}}</div><div>{{r.desc}}</div><div>{{r.psku}}</div><div>{{r.pdesc}}</div><button type="button" aria-label="Remove product" onClick="{{r.remove}}" style="width: 32px; height: 32px; border: 0; background: transparent; cursor: pointer; color: #595959; font-size: 18px">×</button></div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+<div style="margin-top: auto; padding-top: 16px; display: flex; justify-content: flex-end"><button type="button" onClick="{{toInfo}}" style="width: 327px; max-width: 100%; height: 52px; border: 0; border-radius: 4px; background: {{contBg}}; color: #ffffff; font-size: 17px; cursor: pointer">Continue</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isInfo}}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 420px; display: flex; flex-direction: column; gap: 24px">
+<div style="font-size: 13px; color: #595959">Customer details are optional.</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px 24px">
+<sc-for list="{{fields}}" as="f" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="{{f.id}}" style="font-size: 12px; color: #595959">{{f.label}}</label><input id="{{f.id}}" value="{{f.value}}" onChange="{{f.change}}" placeholder="{{f.ph}}" style="height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; color: #333333"></div>
+</sc-for>
+</div>
+<div style="margin-top: auto; padding-top: 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px"><button type="button" onClick="{{backUpload}}" style="height: 44px; padding: 0 12px; border: 0; background: transparent; font-size: 15px; color: #595959; cursor: pointer">← Back</button><button type="button" onClick="{{toAttrs}}" style="width: 327px; max-width: 100%; height: 52px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 17px; cursor: pointer">Continue</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isAttrs}}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 420px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px 24px">
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="a-type" style="font-size: 12px; color: #595959">Type</label><div style="position: relative"><select id="a-type" style="width: 100%; height: 48px; padding: 0 44px 0 12px; appearance: none; -webkit-appearance: none; border: 1px solid #dcdcdc; border-radius: 4px; background: #ffffff; font-size: 14px; color: #333333"><option>Private Practice</option><option>DSO</option><option>GPO</option><option>Institutional</option><option>Multi-Location Practice</option><option>Other</option></select><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#4f4f4f" style="position: absolute; right: 18px; top: 50%; margin-top: -6px; pointer-events: none"><path d="M4 8h16l-8 9z"></path></svg></div></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="a-sub" style="font-size: 12px; color: #595959">Subtype</label><div style="position: relative"><select id="a-sub" style="width: 100%; height: 48px; padding: 0 44px 0 12px; appearance: none; -webkit-appearance: none; border: 1px solid #dcdcdc; border-radius: 4px; background: #ffffff; font-size: 14px; color: #333333"><option>General</option><option>Solo practitioner</option><option>Group practice</option></select><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#4f4f4f" style="position: absolute; right: 18px; top: 50%; margin-top: -6px; pointer-events: none"><path d="M4 8h16l-8 9z"></path></svg></div></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="a-spec" style="font-size: 12px; color: #595959">Specialty</label><div style="position: relative"><select id="a-spec" style="width: 100%; height: 48px; padding: 0 44px 0 12px; appearance: none; -webkit-appearance: none; border: 1px solid #dcdcdc; border-radius: 4px; background: #ffffff; font-size: 14px; color: #333333"><option>General Dentistry</option><option>Orthodontics</option><option>Oral Surgery</option><option>Pediatric Dentistry</option></select><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#4f4f4f" style="position: absolute; right: 18px; top: 50%; margin-top: -6px; pointer-events: none"><path d="M4 8h16l-8 9z"></path></svg></div></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="a-spend" style="font-size: 12px; color: #595959">Annual Spend</label><input id="a-spend" placeholder="$250,000" style="height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="a-loc" style="font-size: 12px; color: #595959">Number of locations</label><input id="a-loc" placeholder="1" style="height: 48px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="a-reg" style="font-size: 12px; color: #595959">Region</label><div style="position: relative"><select id="a-reg" style="width: 100%; height: 48px; padding: 0 44px 0 12px; appearance: none; -webkit-appearance: none; border: 1px solid #dcdcdc; border-radius: 4px; background: #ffffff; font-size: 14px; color: #333333"><option>Southwest</option><option>Northeast</option><option>Southeast</option><option>Midwest</option><option>West</option></select><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#4f4f4f" style="position: absolute; right: 18px; top: 50%; margin-top: -6px; pointer-events: none"><path d="M4 8h16l-8 9z"></path></svg></div></div>
+</div>
+<div style="margin-top: auto; padding-top: 16px; display: flex; flex-wrap: wrap; align-items: stretch; gap: 16px"><button type="button" onClick="{{backInfo}}" style="height: 52px; padding: 0 12px; border: 0; background: transparent; font-size: 15px; color: #595959; cursor: pointer">← Back</button>
+<div style="position: relative; flex: 1 1 300px; min-width: 0">
+<sc-if value="{{formOpen}}" hint-placeholder-val="{{ false }}"><div role="listbox" aria-label="Formulary" style="position: absolute; left: 0; right: 0; bottom: calc(100% + 8px); z-index: 6; max-height: 260px; overflow-y: auto; padding: 8px 14px; background: #ffffff; border-radius: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); display: flex; flex-direction: column; align-items: flex-start; gap: 6px">
+<sc-for list="{{formOpts}}" as="o" hint-placeholder-count="5"><button type="button" role="option" aria-selected="{{o.selected}}" onClick="{{o.pick}}" style="min-height: 36px; padding: 4px 12px; border: 0; border-radius: 3px; background: {{o.bg}}; color: #333333; font-size: 17px; cursor: pointer; outline-offset: 2px">{{o.name}}</button></sc-for>
+</div></sc-if>
+<div style="height: 52px; display: flex; align-items: center; border-radius: 4px; background: #efefef; overflow: hidden">
+<sc-if value="{{noForm}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{toggleForm}}" aria-expanded="{{formExpanded}}" style="flex: 1; height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px 0 18px; border: 0; background: transparent; font-size: 17px; color: #333333; cursor: pointer">Formulary<span aria-hidden="true" style="width: 30px; height: 30px; border-radius: 50%; border: {{caretBorder}}; display: flex; align-items: center; justify-content: center"><svg width="12" height="12" viewBox="0 0 24 24" fill="#4f4f4f" style="transform: {{caretRot}}"><path d="M4 8h16l-8 9z"></path></svg></span></button></sc-if>
+<sc-if value="{{hasForm}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{toggleForm}}" aria-expanded="{{formExpanded}}" aria-label="Change formulary" style="flex: 1; height: 52px; display: flex; align-items: center; padding: 0 12px; border: 0; background: transparent; cursor: pointer"><span style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px; border-radius: 3px; background: {{formBg}}; color: #333333; font-size: 17px">{{formulary}}<span aria-hidden="true" style="font-size: 16px; color: #595959">×</span></span></button><button type="button" aria-label="Clear formulary" onClick="{{clearForm}}" style="width: 48px; height: 52px; flex: none; border: 0; border-left: 1px solid #e0e0e0; background: #f7f7f7; font-size: 20px; color: #333333; cursor: pointer">×</button></sc-if>
+</div>
+</div>
+<button type="button" onClick="{{checkSavings}}" style="flex: 0 0 327px; max-width: 100%; height: 52px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 17px; cursor: pointer">Check savings</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isLoading}}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 420px; box-sizing: border-box; padding: 80px 0; display: flex; flex-direction: column; align-items: center; gap: 14px"><div class="spin" role="progressbar" aria-label="Cross-referencing products" style="width: 36px; height: 36px; border-radius: 50%; border: 4px solid #e5e5e5; border-top-color: #21c5c4; box-sizing: border-box"></div><div style="font-size: 15px; font-weight: 700">Cross-referencing the customer’s products…</div><div style="font-size: 13px; color: #595959">This usually takes a few seconds.</div></div>
+</sc-if>
+
+<sc-if value="{{isResults}}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 420px; display: flex; flex-direction: column; gap: 28px; padding-top: 24px">
+<div style="text-align: center; display: flex; flex-direction: column; gap: 8px"><div style="font-size: 16px; color: #595959">Estimated savings</div><div style="font-size: 40px; font-weight: 700">$2,080.20</div><div style="font-size: 13px">{{fileLine}}</div><div style="font-size: 11px; font-style: italic; color: #595959">Instant savings analyses are auto-generated projections using latest AI technologies and will be reviewed by staff to verify accuracy.</div></div>
+<div style="margin-top: auto; padding-top: 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px"><button type="button" onClick="{{restart}}" style="height: 44px; padding: 0 12px; border: 0; background: transparent; font-size: 15px; color: #595959; cursor: pointer">Start again</button><div style="display: flex; flex-wrap: wrap; gap: 16px"><button type="button" onClick="{{toReview}}" style="width: 220px; max-width: 100%; height: 52px; border: 0; border-radius: 4px; background: #ebebeb; color: #333333; font-size: 17px; cursor: pointer">Review matches</button><button type="button" onClick="{{toReport}}" style="width: 327px; max-width: 100%; height: 52px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 17px; cursor: pointer">View report</button></div></div>
+</div>
+</sc-if>
+
+<div style="text-align: right; font-size: 11px; color: #767676">Powered by <span style="color: #1f7f7c">base86</span></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isReview}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 24px 20px 32px; max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px"><h1 style="margin: 0; font-size: 22px">Review &amp; Adjust Matches</h1><div style="display: flex; gap: 10px; flex-wrap: wrap"><input aria-label="Search matches" placeholder="Search matches" style="width: 320px; max-width: 100%; height: 44px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px"><button type="button" style="height: 44px; padding: 0 20px; border: 1px solid #dcdcdc; border-radius: 6px; background: #ffffff; font-size: 14px; color: #333333">Filter</button></div></div>
+<div style="font-size: 13px; color: #595959; display: flex; align-items: center; gap: 6px; flex-wrap: wrap">Click <img src="./assets/3d8389d2620b9ee2a10c698ef080e507.png" alt="the featured badge" width="18" height="18"> next to a proposed SKU to see a featured product.</div>
+<div style="border: 1px solid #e5e5e5; border-radius: 8px; overflow-x: auto">
+<div style="min-width: 1320px">
+<div style="display: grid; grid-template-columns: 96px 28px 100px 260px 170px 180px 300px 70px 90px 90px; gap: 10px; padding: 14px 16px; font-size: 12px; color: #595959; border-bottom: 1px solid #e5e5e5"><div></div><div></div><div>Current SKU</div><div>Current SKU Description</div><div>Supplier Name</div><div>Proposed SKU</div><div>Proposed SKU Description</div><div>Quantity</div><div>Current Price</div><div>Proposed Price</div></div>
+<sc-for list="{{tRows}}" as="r" hint-placeholder-count="7">
+<div style="display: grid; grid-template-columns: 96px 28px 100px 260px 170px 180px 300px 70px 90px 90px; gap: 10px; align-items: center; padding: 6px 16px; background: {{r.bg}}; font-size: 13px">
+<div style="display: flex; gap: 2px"><button type="button" aria-label="Match info" style="width: 30px; height: 40px; border: 0; background: transparent; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16v.5" stroke-linecap="round"></path></svg></button><button type="button" aria-label="Adjust match" style="width: 30px; height: 40px; border: 0; background: transparent; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#444444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg></button><button type="button" aria-label="Bookmark" style="width: 30px; height: 40px; border: 0; background: transparent; padding: 0"><svg width="16" height="18" viewBox="0 0 20 24" fill="none" stroke="#444444" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h12v20l-6-5-6 5z"></path></svg></button></div>
+<div style="width: 18px; height: 18px; border-radius: 2px; box-sizing: border-box; background: {{r.sw}}; border: 1px solid {{r.swb}}"></div>
+<div>{{r.sku}}</div><div>{{r.desc}}</div><div>Apex Medical Distributors</div>
+<div style="display: flex; align-items: center; gap: 4px; color: {{r.pfg}}; font-style: {{r.pstyle}}"><sc-if value="{{r.feat}}" hint-placeholder-val="{{ false }}"><button type="button" aria-label="Show featured product" onClick="{{r.open}}" style="width: 32px; height: 32px; flex: none; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center"><img src="./assets/3d8389d2620b9ee2a10c698ef080e507.png" alt="" width="18" height="18" style="display: block"></button></sc-if><span>{{r.psku}}</span></div>
+<div style="color: {{r.pfg}}; font-style: {{r.pstyle}}">{{r.pdesc}}</div><div>{{r.qty}}</div><div>{{r.cp}}</div><div>{{r.pp}}</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 16px"><button type="button" onClick="{{toResults}}" style="height: 48px; padding: 0 16px; border: 0; background: transparent; font-size: 16px; color: #333333; cursor: pointer">Cancel</button><div style="display: flex"><button type="button" onClick="{{saveRegen}}" style="height: 52px; padding: 0 28px; border: 0; border-radius: 4px 0 0 4px; background: #333333; color: #ffffff; font-size: 16px; cursor: pointer">Save and regenerate report</button><button type="button" aria-label="Report settings" style="width: 64px; height: 52px; border: 0; border-left: 1px solid #555555; border-radius: 0 4px 4px 0; background: #333333; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M10.3 4.3a1.7 1.7 0 0 1 3.4 0 1.7 1.7 0 0 0 2.6 1.1 1.7 1.7 0 0 1 2.3 2.3 1.7 1.7 0 0 0 1.1 2.6 1.7 1.7 0 0 1 0 3.4 1.7 1.7 0 0 0-1.1 2.6 1.7 1.7 0 0 1-2.3 2.3 1.7 1.7 0 0 0-2.6 1.1 1.7 1.7 0 0 1-3.4 0 1.7 1.7 0 0 0-2.6-1.1 1.7 1.7 0 0 1-2.3-2.3 1.7 1.7 0 0 0-1.1-2.6 1.7 1.7 0 0 1 0-3.4 1.7 1.7 0 0 0 1.1-2.6 1.7 1.7 0 0 1 2.3-2.3 1.7 1.7 0 0 0 2.6-1.1z"></path></svg></button></div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{isReport}}" hint-placeholder-val="{{ false }}">
+<div style="min-height: 100vh; background: #e1e4e4">
+<div style="height: 56px; background: #4f4f4f; color: #f5f5f5; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 12px 0 20px; font-size: 14px"><span>Customer report · {{org}}.pdf</span><button type="button" onClick="{{toResults}}" style="height: 40px; padding: 0 14px; border: 1px solid #9e9e9e; border-radius: 4px; background: transparent; color: #ffffff; font-size: 14px; cursor: pointer">← Back</button></div>
+<div style="padding: 28px 16px">
+<div style="max-width: 1180px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 10px rgba(0,0,0,0.12); padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px"><div><div style="font-size: 22px; font-weight: 700">Price comparison report</div><div style="font-size: 13px; color: #595959; margin-top: 4px">Prepared for {{org}} by Demo Supplier01{{formLine}}</div></div><div style="text-align: right"><div style="font-size: 12px; color: #595959">Estimated savings</div><div style="font-size: 26px; font-weight: 700">$2,080.20</div></div></div>
+<div style="overflow-x: auto">
+<div style="min-width: 1000px">
+<div style="display: grid; grid-template-columns: 100px 1.3fr 150px 1.5fr 60px 90px 90px; gap: 10px; padding: 12px 14px; background: #21c5c4; color: #0d3333; font-size: 12px; font-weight: 700"><div>Current SKU</div><div>Current Description</div><div>Proposed SKU</div><div>Proposed Description</div><div>Qty</div><div>Current Price</div><div>Proposed Price</div></div>
+<sc-for list="{{tRows}}" as="r" hint-placeholder-count="7">
+<div style="display: grid; grid-template-columns: 100px 1.3fr 150px 1.5fr 60px 90px 90px; gap: 10px; padding: 12px 14px; border-bottom: 1px solid #e5e5e5; font-size: 12px"><div>{{r.sku}}</div><div>{{r.desc}}</div><div style="color: {{r.pfg}}; font-style: {{r.pstyle}}">{{r.psku}}</div><div style="color: {{r.pfg}}; font-style: {{r.pstyle}}">{{r.pdesc}}</div><div>{{r.qty}}</div><div>{{r.cp}}</div><div>{{r.pp}}</div></div>
+</sc-for>
+</div>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isMfrEmail}}" hint-placeholder-val="{{ false }}">
+<div onKeyDown="{{onViewKey}}" style="min-height: 100vh; background: #f2f3f3; display: flex; flex-direction: column">
+<button type="button" id="kb-back" class="kb-back" aria-label="Back to Field Surface (Delete or Esc)" onClick="{{backToReview}}" style="position: fixed; left: 12px; top: 12px; z-index: 5; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(51,51,51,0.08); color: #333333; font-size: 18px; cursor: pointer">←</button>
+<div style="max-width: 900px; width: 100%; margin: 24px auto 40px; box-sizing: border-box; padding: 0 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 13px; color: #595959"><b style="color: #333333">Sample request through base86</b> · From base86 &lt;hello@base86.com&gt; to {{pd.mfrEmail}}</div>
+<div style="background: #ffffff; padding: 56px 48px 48px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; justify-content: center; gap: 4px; font-family: Comfortaa, Arimo, Arial, sans-serif; font-weight: 700; color: #333333; font-size: 46px; line-height: 1"><span>base</span><span style="width: 4px; height: 64px; border-radius: 2px; background: #ff8070"></span><span style="color: #ff8070; letter-spacing: -2px">86</span><span style="width: 4px; height: 64px; border-radius: 2px; background: #ff8070"></span></div><p style="margin: 0; text-align: center; font-size: 22px; line-height: 1.5"><b>Demo Supplier01</b> has requested a sample of one of your products through base86 to send to a customer.</p><div style="background: #f2f3f3; border-radius: 14px; padding: 18px 28px; display: flex; flex-direction: column; gap: 14px"><div style="display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 17px; align-items: baseline"><span style="color: #333333">Product</span><b style="color: #333333">{{pm.name}}</b></div><div style="display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 17px; align-items: baseline"><span style="color: #333333">SKU</span><b style="color: #333333">{{pm.sku}}</b></div></div><div style="background: #f2f3f3; border-radius: 14px; padding: 18px 28px; display: flex; flex-direction: column; gap: 14px"><sc-for list="{{custTable}}" as="c" hint-placeholder-count="5"><div style="display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 17px; align-items: baseline"><span>{{c.k}}</span><b>{{c.v}}</b></div></sc-for></div><div style="display: flex; justify-content: center"><button type="button" style="height: 64px; padding: 0 64px; border: 0; border-radius: 6px; background: #21c5c4; color: #ffffff; font-size: 22px; cursor: pointer">View Request</button></div><div style="text-align: center; font-size: 15px; color: #767676">If the email text is not visible, please follow this <span style="color: #e0604f">link</span></div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isCustEmail}}" hint-placeholder-val="{{ false }}">
+<div onKeyDown="{{onViewKey}}" style="min-height: 100vh; background: #f2f3f3; display: flex; flex-direction: column">
+<button type="button" id="kb-back" class="kb-back" aria-label="Back to Field Surface (Delete or Esc)" onClick="{{backToReview}}" style="position: fixed; left: 12px; top: 12px; z-index: 5; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(51,51,51,0.08); color: #333333; font-size: 18px; cursor: pointer">←</button>
+<div style="max-width: 900px; width: 100%; margin: 24px auto 40px; box-sizing: border-box; padding: 0 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="font-size: 13px; color: #595959"><b style="color: #333333">Demo Supplier01 shared a product with you</b> · From Demo Supplier01 via base86 to {{shareTo}}</div>
+<div style="background: #ffffff; padding: 56px 48px 48px; display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; align-items: center; justify-content: center; gap: 4px; font-family: Comfortaa, Arimo, Arial, sans-serif; font-weight: 700; color: #333333; font-size: 46px; line-height: 1"><span>base</span><span style="width: 4px; height: 64px; border-radius: 2px; background: #ff8070"></span><span style="color: #ff8070; letter-spacing: -2px">86</span><span style="width: 4px; height: 64px; border-radius: 2px; background: #ff8070"></span></div><p style="margin: 0; text-align: center; font-size: 22px; line-height: 1.5"><b>Demo Supplier01</b> shared a featured product with you through base86. It’s a good alternative to what you’re currently buying.</p><div style="background: #f2f3f3; border-radius: 14px; padding: 18px 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 20px"><img src="{{pmThumb}}" alt="" style="width: 96px; height: 96px; border-radius: 8px; object-fit: cover; background: #ffffff"><div style="flex: 1 1 260px; display: flex; flex-direction: column; gap: 10px"><div style="display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 17px; align-items: baseline"><span style="color: #333333">Product</span><b style="color: #333333">{{pm.name}}</b></div><div style="display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 17px; align-items: baseline"><span style="color: #333333">SKU</span><b style="color: #333333">{{pm.sku}}</b></div><div style="display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 17px; align-items: baseline"><span style="color: #333333">Brand</span><b style="color: #333333">{{pm.mfr}}</b></div></div></div><div style="background: #f2f3f3; border-radius: 14px; padding: 18px 28px; display: flex; flex-direction: column; gap: 14px"><div style="display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 17px; align-items: baseline"><span style="color: #333333">You buy now</span><b style="color: #333333">{{cur.desc}}</b></div><div style="display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 17px; align-items: baseline"><span style="color: #333333">Your SKU</span><b style="color: #333333">{{cur.sku}}</b></div></div><div style="display: flex; justify-content: center"><button type="button" onClick="{{toCustPage}}" style="height: 64px; padding: 0 64px; border: 0; border-radius: 6px; background: #21c5c4; color: #ffffff; font-size: 22px; cursor: pointer">View Product</button></div><div style="text-align: center; font-size: 15px; color: #767676">If the email text is not visible, please follow this <span style="color: #e0604f">link</span></div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{isCustPage}}" hint-placeholder-val="{{ false }}">
+<div onKeyDown="{{onViewKey}}" style="min-height: 100vh; background: #f6f7f7; display: flex; flex-direction: column">
+<button type="button" id="kb-back" class="kb-back" aria-label="Back to Field Surface (Delete or Esc)" onClick="{{backToReview}}" style="position: fixed; left: 12px; top: 12px; z-index: 5; width: 40px; height: 40px; border: 0; border-radius: 50%; background: rgba(51,51,51,0.08); color: #333333; font-size: 18px; cursor: pointer">←</button>
+<div style="display: flex; align-items: center; gap: 12px; padding: 14px 20px 14px 64px; background: #ffffff; border-bottom: 1px solid #e5e5e5"><span style="font-size: 18px; font-weight: 700">Demo Supplier01</span></div>
+<div style="max-width: 1200px; width: 100%; margin: 24px auto; box-sizing: border-box; padding: 0 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; align-items: start">
+<div style="background: #ffffff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: #595959">WHAT YOU BUY NOW</div>
+<div style="font-size: 20px; font-weight: 700; line-height: 1.3">{{cur.desc}}</div>
+<sc-for list="{{curTable}}" as="c" hint-placeholder-count="4"><div style="display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid #eeeeee; font-size: 14px"><span style="color: #595959">{{c.k}}</span><span style="text-align: right">{{c.v}}</span></div></sc-for>
+</div>
+<div style="background: #ffffff; border: 1px solid #e5e5e5; border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 18px; position: relative">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: #1f7f7c">FEATURED ALTERNATIVE</div>
+<button type="button" aria-label="More options" onClick="{{toggleCustMenu}}" style="position: absolute; right: 12px; top: 10px; width: 44px; height: 44px; border: 0; background: transparent; font-size: 22px; color: #595959; cursor: pointer">⋮</button>
+<sc-if value="{{custMenu}}" hint-placeholder-val="{{ false }}"><div style="position: absolute; right: 12px; top: 54px; z-index: 3; min-width: 290px; padding: 6px 0; background: #ffffff; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.18)"><button type="button" class="menu-item" role="switch" aria-checked="{{catChecked}}" onClick="{{toggleCat}}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 0 16px; border: 0; text-align: left; font-size: 14px; color: #333333; cursor: pointer"><span aria-hidden="true" style="position: relative; width: 40px; height: 22px; flex: none; border-radius: 11px; background: {{swTrack}}"><span style="position: absolute; top: 2px; left: {{swKnobX}}; width: 18px; height: 18px; border-radius: 50%; background: {{swKnob}}; box-shadow: 0 1px 3px rgba(0,0,0,0.3)"></span></span>{{catLabel}}</button><div style="height: 1px; margin: 4px 0; background: #eeeeee"></div><button type="button" class="menu-item" onClick="{{openAi}}" style="display: block; width: 100%; height: 44px; padding: 0 16px; border: 0; text-align: left; font-size: 14px; color: #333333; cursor: pointer">Generate AI summary</button></div></sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 22px">
+<div style="flex: none; width: 200px; display: flex; flex-direction: column; gap: 8px">
+<button type="button" aria-label="Expand image" onClick="{{openLb}}" style="position: relative; width: 200px; height: 200px; padding: 0; border: 0; border-radius: 8px; overflow: hidden; background: #f7f7f7; cursor: zoom-in"><img src="{{mainImg}}" alt="{{pd.name}}" style="width: 200px; height: 200px; object-fit: cover; display: block"></button>
+<div style="display: flex; gap: 8px"><sc-for list="{{thumbs}}" as="t" hint-placeholder-count="3"><button type="button" aria-label="Show photo" onClick="{{t.pick}}" style="width: 61px; height: 61px; padding: 0; border-radius: 6px; overflow: hidden; border: 2px solid {{t.border}}; background: #ffffff; cursor: pointer"><img src="{{t.src}}" alt="" style="width: 57px; height: 57px; object-fit: cover; display: block"></button></sc-for></div>
+</div>
+<div style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding-right: 30px">
+<div><h1 style="margin: 0; font-size: 22px; line-height: 1.25">{{pd.name}}</h1><div style="font-size: 13px; color: #595959; margin-top: 4px">{{pd.sku}} · {{pd.src}}</div></div>
+<div><button type="button" onClick="{{custRequest}}" style="height: 44px; padding: 0 22px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 15px; cursor: pointer">Request a sample</button></div>
+</div>
+</div>
+<div style="height: 1px; background: #e5e5e5"></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px 10px"><sc-for list="{{custSpecs}}" as="c" hint-placeholder-count="8"><div><div style="font-size: 14px">{{c.v}}</div><div style="font-size: 11px; color: #595959; margin-top: 3px">{{c.k}}</div></div></sc-for></div>
+<div><div style="font-size: 14px">{{pd.certs}}</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Certifications</div></div>
+<sc-if value="{{hasDocs}}" hint-placeholder-val="{{ true }}"><div style="display: flex; flex-wrap: wrap; gap: 6px 20px"><button type="button" class="lnk" onClick="{{openSpec}}">Product sheet</button><button type="button" class="lnk" onClick="{{openSds}}">Safety data sheet</button><button type="button" class="lnk" onClick="{{openVideo}}">Product video</button></div></sc-if><sc-if value="{{noDocs}}" hint-placeholder-val="{{ false }}"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px 10px"><div><div style="font-size: 14px">N/A</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Product sheet</div></div><div><div style="font-size: 14px">N/A</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Safety data sheet</div></div><div><div style="font-size: 14px">N/A</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Product video</div></div></div></sc-if>
+<div><div style="font-size: 14px">{{pd.cat}}</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Category</div></div>
+<div style="height: 1px; background: #e5e5e5"></div>
+<div><h2 style="margin: 0; font-size: 18px">Description</h2><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.6">{{pd.desc}}</p></div>
+<div><h2 style="margin: 0; font-size: 18px">Key features</h2><ul style="margin: 8px 0 0; padding-left: 20px; font-size: 14px; line-height: 1.7"><sc-for list="{{features}}" as="f" hint-placeholder-count="4"><li>{{f.t}}</li></sc-for></ul></div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showDetail}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 20; background: rgba(51,51,51,0.45); display: flex; justify-content: center; align-items: flex-start; padding: 40px 16px; box-sizing: border-box">
+<div style="position: relative; width: 100%; max-width: 680px; max-height: calc(100vh - 80px); overflow-y: auto; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.18); padding: 28px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+<button type="button" aria-label="Close" onClick="{{closeDetail}}" style="position: absolute; right: 12px; top: 10px; width: 44px; height: 44px; border: 0; background: transparent; font-size: 22px; color: #595959; cursor: pointer">×</button>
+<button type="button" aria-label="More options" onClick="{{toggleMenu}}" style="position: absolute; right: 56px; top: 10px; width: 44px; height: 44px; border: 0; background: transparent; font-size: 22px; color: #595959; cursor: pointer">⋮</button>
+<sc-if value="{{menu}}" hint-placeholder-val="{{ false }}"><div style="position: absolute; right: 56px; top: 54px; z-index: 3; min-width: 290px; padding: 6px 0; background: #ffffff; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.18)"><button type="button" class="menu-item" role="switch" aria-checked="{{catChecked}}" onClick="{{toggleCat}}" style="display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; padding: 0 16px; border: 0; text-align: left; font-size: 14px; color: #333333; cursor: pointer"><span aria-hidden="true" style="position: relative; width: 40px; height: 22px; flex: none; border-radius: 11px; background: {{swTrack}}"><span style="position: absolute; top: 2px; left: {{swKnobX}}; width: 18px; height: 18px; border-radius: 50%; background: {{swKnob}}; box-shadow: 0 1px 3px rgba(0,0,0,0.3)"></span></span>{{catLabel}}</button><div style="height: 1px; margin: 4px 0; background: #eeeeee"></div><button type="button" class="menu-item" onClick="{{openAi}}" style="display: block; width: 100%; height: 44px; padding: 0 16px; border: 0; text-align: left; font-size: 14px; color: #333333; cursor: pointer">Generate AI summary</button><button type="button" class="menu-item" onClick="{{openShare}}" style="display: block; width: 100%; height: 44px; padding: 0 16px; border: 0; text-align: left; font-size: 14px; color: #333333; cursor: pointer">Share with customer</button></div></sc-if>
+<div style="display: flex; flex-wrap: wrap; gap: 22px">
+<div style="flex: none; width: 200px; display: flex; flex-direction: column; gap: 8px">
+<button type="button" aria-label="Expand image" onClick="{{openLb}}" style="position: relative; width: 200px; height: 200px; padding: 0; border: 0; border-radius: 8px; overflow: hidden; background: #f7f7f7; cursor: zoom-in"><img src="{{mainImg}}" alt="{{pd.name}}" style="width: 200px; height: 200px; object-fit: cover; display: block"><span style="position: absolute; right: 8px; bottom: 8px; width: 32px; height: 32px; border-radius: 50%; background: rgba(51,51,51,0.75); display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"></path></svg></span></button>
+<div style="display: flex; gap: 8px"><sc-for list="{{thumbs}}" as="t" hint-placeholder-count="3"><button type="button" aria-label="Show photo" onClick="{{t.pick}}" style="width: 61px; height: 61px; padding: 0; border-radius: 6px; overflow: hidden; border: 2px solid {{t.border}}; background: #ffffff; cursor: pointer"><img src="{{t.src}}" alt="" style="width: 57px; height: 57px; object-fit: cover; display: block"></button></sc-for></div>
+</div>
+<div style="flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 12px; padding-right: 76px">
+<div><div style="font-size: 22px; font-weight: 700; line-height: 1.25">{{pd.name}}</div><div style="font-size: 13px; color: #595959; margin-top: 4px">{{pd.sku}} · {{pd.src}}</div></div>
+<div><button type="button" onClick="{{repRequest}}" style="height: 44px; padding: 0 22px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 15px; cursor: pointer">Request a sample</button></div>
+<div style="font-size: 12px; color: #595959">Requests are sent on behalf of {{org}}.</div>
+</div>
+</div>
+<div style="height: 1px; background: #e5e5e5"></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px 10px"><sc-for list="{{repSpecs}}" as="c" hint-placeholder-count="8"><div><div style="font-size: 14px">{{c.v}}</div><div style="font-size: 11px; color: #595959; margin-top: 3px">{{c.k}}</div></div></sc-for></div>
+<div><div style="font-size: 14px">{{pd.certs}}</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Certifications</div></div>
+<sc-if value="{{hasDocs}}" hint-placeholder-val="{{ true }}"><div style="display: flex; flex-wrap: wrap; gap: 6px 20px"><button type="button" class="lnk" onClick="{{openSpec}}">Product sheet</button><button type="button" class="lnk" onClick="{{openSds}}">Safety data sheet</button><button type="button" class="lnk" onClick="{{openVideo}}">Product video</button></div></sc-if><sc-if value="{{noDocs}}" hint-placeholder-val="{{ false }}"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px 10px"><div><div style="font-size: 14px">N/A</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Product sheet</div></div><div><div style="font-size: 14px">N/A</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Safety data sheet</div></div><div><div style="font-size: 14px">N/A</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Product video</div></div></div></sc-if>
+<div><div style="font-size: 14px">{{pd.cat}}</div><div style="font-size: 11px; color: #595959; margin-top: 3px">Category</div></div>
+<div style="height: 1px; background: #e5e5e5"></div>
+<div><h3 style="margin: 0; font-size: 18px">Description</h3><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.6">{{pd.desc}}</p></div>
+<div><h3 style="margin: 0; font-size: 18px">Key features</h3><ul style="margin: 8px 0 0; padding-left: 20px; font-size: 14px; line-height: 1.7"><sc-for list="{{features}}" as="f" hint-placeholder-count="4"><li>{{f.t}}</li></sc-for></ul></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showRequest}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 30; background: rgba(51,51,51,0.45); display: flex; justify-content: center; align-items: flex-start; padding: 60px 16px; box-sizing: border-box; overflow-y: auto">
+<div role="dialog" aria-label="Request a sample" style="width: 100%; max-width: 616px; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.18); padding: 28px; box-sizing: border-box">
+<sc-if value="{{notSent}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div><h2 style="margin: 0; font-size: 22px">Request a sample</h2><div style="font-size: 13px; color: #595959; margin-top: 6px">{{reqSub}}</div></div>
+<div style="display: flex; gap: 12px; align-items: center; padding: 10px; border: 1px solid #e5e5e5; border-radius: 8px"><img src="{{pmThumb}}" alt="" style="width: 52px; height: 52px; border-radius: 6px; object-fit: cover"><div style="font-size: 14px; font-weight: 700">{{pm.name}}</div></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+<sc-for list="{{fields}}" as="f" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="r-{{f.id}}" style="font-size: 12px; color: #595959">{{f.label}}</label><input id="r-{{f.id}}" value="{{f.value}}" onChange="{{f.change}}" placeholder="{{f.ph}}" style="height: 46px; box-sizing: border-box; padding: 0 12px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; color: #333333"></div>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 16px"><button type="button" onClick="{{closeRequest}}" style="height: 44px; padding: 0 12px; border: 0; background: transparent; font-size: 15px; cursor: pointer">Cancel</button><button type="button" onClick="{{sendRequest}}" style="height: 48px; padding: 0 28px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 16px; cursor: pointer">Confirm and request</button></div>
+</div>
+</sc-if>
+<sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 24px 0 8px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #1e8f4e; display: flex; align-items: center; justify-content: center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></div>
+<h2 style="margin: 0; font-size: 22px">Sample requested</h2>
+<div style="font-size: 14px; color: #595959">{{sentLine}}</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 8px">
+<sc-if value="{{repSent}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{toMfrEmail}}" style="height: 46px; padding: 0 20px; border: 1px solid #333333; border-radius: 4px; background: #ffffff; color: #333333; font-size: 15px; cursor: pointer">See the manufacturer’s email</button></sc-if>
+<button type="button" onClick="{{closeRequest}}" style="height: 46px; padding: 0 28px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 15px; cursor: pointer">Done</button>
+</div>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showShare}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 30; background: rgba(51,51,51,0.45); display: flex; justify-content: center; align-items: flex-start; padding: 80px 16px; box-sizing: border-box">
+<div role="dialog" aria-label="Share with customer" style="width: 100%; max-width: 560px; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.18); padding: 28px; box-sizing: border-box">
+<sc-if value="{{notShared}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div><h2 style="margin: 0; font-size: 22px">Share with customer</h2><div style="font-size: 13px; color: #595959; margin-top: 6px">We’ll email {{org}} a link to this product’s details.</div></div>
+<div style="display: flex; gap: 12px; align-items: center; padding: 10px; border: 1px solid #e5e5e5; border-radius: 8px"><img src="{{pmThumb}}" alt="" style="width: 52px; height: 52px; border-radius: 6px; object-fit: cover"><div style="font-size: 14px; font-weight: 700">{{pm.name}}</div></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><label for="share-email" style="font-size: 12px; color: #595959">Customer email*</label><input id="share-email" type="email" value="{{shareEmail}}" onChange="{{onShareEmail}}" placeholder="name@practice.com" style="height: 46px; box-sizing: border-box; padding: 0 12px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; color: #333333"></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 16px"><button type="button" onClick="{{closeShare}}" style="height: 44px; padding: 0 12px; border: 0; background: transparent; font-size: 15px; cursor: pointer">Cancel</button><button type="button" onClick="{{doShare}}" style="height: 48px; padding: 0 28px; border: 0; border-radius: 4px; background: {{shareBg}}; color: #ffffff; font-size: 16px; cursor: pointer">Share</button></div>
+</div>
+</sc-if>
+<sc-if value="{{shared}}" hint-placeholder-val="{{ false }}">
+<div style="padding: 24px 0 8px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #1e8f4e; display: flex; align-items: center; justify-content: center"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></div>
+<h2 style="margin: 0; font-size: 22px">Shared with the customer</h2>
+<div style="font-size: 14px; color: #595959">Sent to {{shareTo}}.</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 8px"><button type="button" onClick="{{toCustEmail}}" style="height: 46px; padding: 0 20px; border: 1px solid #333333; border-radius: 4px; background: #ffffff; color: #333333; font-size: 15px; cursor: pointer">See the customer’s email</button><button type="button" onClick="{{closeShare}}" style="height: 46px; padding: 0 28px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 15px; cursor: pointer">Done</button></div>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showDoc}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 35; background: rgba(20,20,20,0.75); display: flex; justify-content: center; align-items: flex-start; padding: 30px 16px; box-sizing: border-box">
+<div style="width: 100%; max-width: 900px; background: #ffffff; border-radius: 8px; overflow: hidden">
+<div style="height: 48px; background: #3a3a3a; color: #f5f5f5; font-size: 14px; padding: 0 8px 0 20px; display: flex; align-items: center; justify-content: space-between"><span>{{docTitle}}</span><button type="button" aria-label="Close" onClick="{{closeDoc}}" style="width: 44px; height: 44px; border: 0; background: transparent; color: #f5f5f5; font-size: 22px; cursor: pointer">×</button></div>
+<sc-if value="{{docIsPage}}" hint-placeholder-val="{{ true }}"><div style="height: 72vh; overflow-y: auto; background: #e9eaea"><img src="{{docSrc}}" alt="{{docTitle}}" style="width: 100%; display: block"></div></sc-if>
+<sc-if value="{{docIsVideo}}" hint-placeholder-val="{{ false }}"><div style="background: #111111; padding: 24px; display: flex; flex-direction: column; gap: 14px"><div style="position: relative"><img src="{{videoSrc}}" alt="Product video" style="width: 100%; display: block"><sc-if value="{{notPlaying}}" hint-placeholder-val="{{ true }}"><button type="button" aria-label="Play video" onClick="{{play}}" style="position: absolute; left: 50%; top: 50%; width: 88px; height: 88px; margin: -44px 0 0 -44px; border-radius: 50%; border: 2px solid #ffffff; background: rgba(0,0,0,0.55); cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="34" height="34" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></button></sc-if></div><div style="height: 5px; border-radius: 3px; background: #444444"><div style="width: {{progress}}; height: 5px; border-radius: 3px; background: #21c5c4"></div></div><div style="font-size: 15px; color: #f5f5f5">{{pd.name}} · Product video</div></div></sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showAi}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 40; background: rgba(20,20,20,0.55); display: flex; justify-content: center; align-items: flex-start; padding: 120px 16px; box-sizing: border-box">
+<div role="dialog" aria-label="AI summary" style="width: 100%; max-width: 520px; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.25); padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="#21c5c4" aria-hidden="true"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z"></path></svg><h2 style="margin: 0; font-size: 20px">AI summary</h2></div>
+<div style="font-size: 13px; color: #595959">{{aiSub}}</div>
+<p style="margin: 0; font-size: 15px; line-height: 1.55">{{aiText}}</p>
+<div style="display: flex; justify-content: flex-end"><button type="button" onClick="{{closeAi}}" style="height: 44px; padding: 0 24px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 15px; cursor: pointer">Close</button></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showLb}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-label="Product image" style="position: fixed; inset: 0; z-index: 45; background: rgba(15,15,15,0.88); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; box-sizing: border-box">
+<button type="button" aria-label="Close image" onClick="{{closeLb}}" style="position: absolute; right: 16px; top: 16px; width: 48px; height: 48px; border: 0; border-radius: 50%; background: rgba(255,255,255,0.12); color: #ffffff; font-size: 26px; cursor: pointer">×</button>
+<div style="display: flex; align-items: center; gap: 16px; max-width: 100%">
+<button type="button" aria-label="Previous image" onClick="{{prevImg}}" style="width: 48px; height: 48px; flex: none; border: 0; border-radius: 50%; background: rgba(255,255,255,0.15); color: #ffffff; font-size: 24px; cursor: pointer">‹</button>
+<img src="{{mainImg}}" alt="{{pd.name}}" style="max-width: min(78vw, 820px); max-height: 74vh; border-radius: 8px; object-fit: contain; background: #ffffff; display: block">
+<button type="button" aria-label="Next image" onClick="{{nextImg}}" style="width: 48px; height: 48px; flex: none; border: 0; border-radius: 50%; background: rgba(255,255,255,0.15); color: #ffffff; font-size: 24px; cursor: pointer">›</button>
+</div>
+<div style="font-size: 14px; color: #e5e5e5">{{pd.name}} · {{lbCount}}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showPicker}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 30; background: rgba(20,20,20,0.5); display: flex; justify-content: center; align-items: flex-start; padding: 60px 16px; box-sizing: border-box">
+<div role="dialog" aria-label="Choose files" style="width: 100%; max-width: 820px; background: #ffffff; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden">
+<div style="height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: #f4f4f4; border-bottom: 1px solid #e0e0e0"><div style="display: flex; gap: 8px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #d9d9d9"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #d9d9d9"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #d9d9d9"></span></div><div style="font-size: 14px; font-weight: 700">Downloads</div><div style="width: 140px"></div></div>
+<div style="display: flex; min-height: 340px">
+<div style="width: 160px; flex: none; padding: 14px 10px; background: #fafafa; border-right: 1px solid #ececec; font-size: 13px; display: flex; flex-direction: column; gap: 2px"><div style="font-size: 11px; color: #767676; padding: 4px 8px">Favorites</div><div style="padding: 6px 8px">Recents</div><div style="padding: 6px 8px">Desktop</div><div style="padding: 6px 8px">Documents</div><div style="padding: 6px 8px; border-radius: 6px; background: #e3e7e8; font-weight: 700">Downloads</div></div>
+<div style="flex: 1; min-width: 0; overflow-x: auto"><div style="min-width: 520px">
+<div style="display: grid; grid-template-columns: 1fr 120px 80px 110px; gap: 10px; padding: 8px 16px; font-size: 11px; color: #767676; border-bottom: 1px solid #ececec"><div>Name</div><div>Kind</div><div>Size</div><div>Date Added</div></div>
+<sc-for list="{{pickFiles}}" as="f" hint-placeholder-count="6">
+<button type="button" onClick="{{f.toggle}}" aria-pressed="{{f.pressed}}" style="display: grid; grid-template-columns: 1fr 120px 80px 110px; gap: 10px; align-items: center; width: 100%; min-height: 44px; padding: 6px 16px; border: 0; border-bottom: 1px solid #f2f2f2; background: {{f.bg}}; color: {{f.fg}}; text-align: left; font-size: 13px; cursor: pointer"><span style="display: flex; align-items: center; gap: 10px; min-width: 0"><span style="width: 18px; height: 18px; flex: none; border-radius: 4px; border: 2px solid {{f.box}}; background: {{f.bg}}; color: #ffffff; font-size: 12px; line-height: 14px; text-align: center; box-sizing: border-box">{{f.tick}}</span><span style="padding: 2px 5px; border-radius: 3px; background: {{f.color}}; color: #ffffff; font-size: 10px; font-weight: 700; flex: none">{{f.ext}}</span><span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.name}}</span></span><span>{{f.kind}}</span><span>{{f.size}}</span><span>{{f.date}}</span></button>
+</sc-for>
+</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: #f4f4f4; border-top: 1px solid #e0e0e0"><div style="font-size: 13px; color: #595959">{{pickNote}}</div><div style="display: flex; gap: 10px"><button type="button" onClick="{{closePicker}}" style="height: 36px; padding: 0 16px; border: 1px solid #cfcfcf; border-radius: 6px; background: #ffffff; font-size: 13px; color: #333333; cursor: pointer">Cancel</button><button type="button" onClick="{{openFiles}}" style="height: 36px; padding: 0 20px; border: 0; border-radius: 6px; background: {{openBg}}; color: #ffffff; font-size: 13px; font-weight: 700; cursor: pointer">Open</button></div></div>
+</div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 'upload', files: [], picker: false, sel: {}, q: '', searching: false, rows: [], info: ['', '', '', ''], formulary: '',
+      detail: null, img: 0, lb: false, menu: false, custMenu: false, showAi: false, doc: null, playing: false,
+      request: false, sent: false, reqFrom: 'rep', share: false, shared: false, shareEmail: '' };
+    this.timers = [];
+  }
+  componentDidMount() {
+    this.onKey = (e) => {
+      const S = this.state;
+      if (['mfrEmail', 'custEmail', 'custPage'].indexOf(S.step) < 0) return;
+      if (S.request || S.doc || S.showAi || S.lb) return;
+      const el = (e.composedPath && e.composedPath()[0]) || e.target;
+      const tag = (el && el.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (el && el.isContentEditable)) return;
+      if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Escape') {
+        e.preventDefault();
+        this.setState({ step: 'review', detail: null, menu: false, custMenu: false, request: false, sent: false, share: false, shared: false, doc: null, showAi: false, lb: false });
+      }
+    };
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentWillUnmount() { this.timers.forEach(clearTimeout); if (this.onKey) window.removeEventListener('keydown', this.onKey); }
+  later(fn, ms) { this.timers.push(setTimeout(fn, ms)); }
+  renderVals() {
+    const S = this.state;
+    const B = (id) => '/_blob/' + id;
+    const P = {
+      gown: { name: 'Isolation Gowns, AAMI Level 2, Universal Size, Yellow', sku: 'DEM-1004', mfr: 'Demo Manufacturer01', mfrEmail: 'samples@demomanufacturer01.com', pack: '10 per pack',
+        imgs: [B('fa4bd49f938b38e1422cb2aa4d29660a'), B('d7ae03ce70f04cb5e7ddcca16aff75e6'), B('8dd5d75cc803aef95b1304bf299a3bf1')],
+        docs: { spec: ['DEM-1004 product sheet.pdf', B('df0aefb48b256031393a643719f24b92')], sds: ['DEM-1004 safety data sheet.pdf', B('6be9f78ede1de4ddfac96225bbb6da12')], video: B('7c8fdee5852c10193e440a756d30ded7') },
+        ai: 'it’s AAMI Level 2 rated like the current CLX-2004 gown, and adds elastic knit cuffs and a full-back overlap. Packed 10 per pack.',
+        specs: [['$18.95', 'Proposed price'], ['10', 'Pkg qty'], ['Each', 'UoM'], ['Demo Manufacturer01', 'Brand'], ['USA', 'Country of origin'], ['N/A', 'NDC'], ['N/A', 'UPC'], ['In Stock', 'Material status'], ['SMS', 'Material'], ['AAMI PB70 Level 2', 'Protection level'], ['Universal', 'Size'], ['Yellow', 'Color']],
+        certs: 'AAMI PB70 Level 2, FDA Registered, ISO 13485', cat: 'Infection Control / Personal Protection / Protective Apparel / Isolation Gowns',
+        desc: 'Lightweight SMS isolation gowns rated AAMI PB70 Level 2 for low-to-moderate fluid exposure. Elastic knit cuffs, neck and waist ties, and a full-back overlap give complete coverage. Latex-free and single-use, ideal for dental procedures, exam rooms and isolation areas.',
+        features: ['AAMI PB70 Level 2 for low-to-moderate fluid exposure', 'Elastic knit cuffs', 'Neck and waist ties', 'Full-back overlap for complete coverage', 'Latex-free, single-use'] },
+      shield: { name: 'Disposable Face Shields, Full-Length, Anti-Fog', sku: 'DEM-1006', mfr: 'Demo Manufacturer01', mfrEmail: 'samples@demomanufacturer01.com', pack: '24 per pack',
+        imgs: [B('7ee783ae711b26ff4f01c799900cc5e9'), B('8f2902db04a25911db99e7940ddcf7eb'), B('a5c6709d477b813e76cad995394e08a2')],
+        docs: { spec: ['DEM-1006 product sheet.pdf', B('5723da2c25969e2f2fb666e35260d0d5')], sds: ['DEM-1006 safety data sheet.pdf', B('7ead5eef16dc88dd314f69f02014e328')], video: B('ba319e9149a9dccf21cace62683d1d85') },
+        ai: 'it’s full-length like the current CLX-2006 shield, and adds an anti-fog coating and a foam headband with an elastic strap. It fits over glasses, loupes and masks.',
+        specs: [['$19.95', 'Proposed price'], ['24', 'Pkg qty'], ['Each', 'UoM'], ['Demo Manufacturer01', 'Brand'], ['USA', 'Country of origin'], ['N/A', 'NDC'], ['N/A', 'UPC'], ['In Stock', 'Material status'], ['Full-length', 'Length'], ['Anti-fog', 'Coating'], ['Eyes, nose and mouth', 'Coverage'], ['Foam, elastic strap', 'Headband']],
+        certs: 'FDA Registered, ISO 13485', cat: 'Infection Control / Personal Protection / Eyewear & Face Shields / Face Shields',
+        desc: 'Optically clear, full-length face shields that protect the eyes, nose and mouth from splash, spray and spatter. An anti-fog coating keeps vision clear, and the foam headband with elastic strap gives an all-day comfortable fit. Wearable over glasses, loupes and masks.',
+        features: ['Protects eyes, nose and mouth from splash, spray and spatter', 'Anti-fog coating keeps vision clear', 'Foam headband with elastic strap for all-day comfort', 'Fits over glasses, loupes and masks'] },
+      art: { name: 'Articaine HCl 4% with Epinephrine 1:100,000, 1.7 mL', sku: 'DEM-HV-ART4-100', mfr: 'Demo MFG 01', mfrEmail: 'samples@demomfg01.com', pack: '50 cartridges per box',
+        imgs: [B('fb97491a3b1e3358b30208813cb24b2c'), B('3ff95f59ee4c49acf6f79a094aedc517'), B('b37f5be9fd1911d12bb525a533d72bb9')],
+        docs: { spec: ['DEM-HV-ART4-100 product sheet.pdf', B('792d28f3f1574e04f440a1ba75bc5940')], sds: ['DEM-HV-ART4-100 SDS.pdf', B('dd2553a923d68bf2416370b7cac28d2a')], video: B('0fed6e7a1d0753a1ec174b7f6388ae8f') },
+        ai: 'it’s articaine 4% with epinephrine 1:100,000 in a 1.7 mL gold-band cartridge, the same as the current CLX-2010. It comes 50 per box with a latex-free plunger.',
+        specs: [['$44.75', 'Proposed price'], ['50', 'Pkg qty'], ['BX', 'UoM'], ['Demo MFG 01', 'Brand'], ['Canada', 'Country of origin'], ['99207-0410-05', 'NDC'], ['850102001029', 'UPC'], ['Articaine HCl 40 mg/mL', 'Active ingredient'], ['Epinephrine 1:100,000', 'Vasoconstrictor'], ['1.7 mL', 'Fill volume'], ['Gold', 'Color band'], ['20–25 °C, protect from light', 'Storage']],
+        certs: 'FDA Registered, GMP', cat: 'Anesthetics / Local Anesthetic Cartridges',
+        desc: 'Local anesthetic dental cartridge: articaine hydrochloride 4% with epinephrine 1:100,000 in a 1.7 mL glass cartridge with a latex-free plunger and gold color band. For infiltration and nerve block anesthesia. Rx only.',
+        features: ['Articaine HCl 4% with epinephrine 1:100,000', '1.7 mL glass cartridges, 50 per box', 'Latex-free plunger, gold color band', 'Sterile, Rx only', 'Store at 20–25 °C, protected from light; do not freeze'] }
+    };
+    const R = [
+      ['w', 'CLX-20040', 'Nitrile Exam Gloves, Powder-Free, Medium, Blue', 'Do not carry', 'Do not carry', '-', '100.00', '-', null],
+      ['y', 'CLX-2021', 'Alginate Impression Material, Fast Set, Mint, 1 lb', 'DEM650-27416DX', 'IMAGE ALGINATE FAST SET CANISTER, 1 X 1 LB.', '10', '100.00', '7.50', null],
+      ['y', 'CLX-2004', 'Isolation Gown, Level 2, One Size Fits Most, Yellow', 'DEM-1004', 'Isolation Gowns, AAMI Level 2, Universal Size, Yellow', '10', '100.00', '18.95', 'gown'],
+      ['y', 'CLX-2006', 'Full-Length Face Shield, Anti-Fog, Disposable', 'DEM-1006', 'Disposable Face Shields, Full-Length, Anti-Fog', '10', '100.00', '19.95', 'shield'],
+      ['y', 'CLX-2010', 'Articaine 4% w/EPI 1.7 mL INJ 1:100 Gold', 'DEM-HV-ART4-100', 'Articaine HCl 4% with Epinephrine 1:100,000, 1.7 mL', '1', '100.00', '44.75', 'art'],
+      ['o', 'CLX-2022', 'Aneroid Sphygmomanometer, Adult Cuff, Navy', 'DEM290-PS-O', 'Endodontic Pressure Syringe only, with handle', '10', '100.00', '66.50', null],
+      ['o', 'CLX-2023', 'Pulse Oximeter, Fingertip, with OLED Display', 'DEM990-UGI-6719', 'Isolation Gowns SMS Material - Soft and Breathable, Pink, 10 pcs/bag', '10', '100.00', '10.00', null]
+    ];
+    const SW = { w: ['#ffffff', '#cfcfcf'], y: ['#ffe70f', '#ffe70f'], o: ['#f2994a', '#f2994a'] };
+    const tRows = R.map((r, i) => ({ sku: r[1], desc: r[2], psku: r[3], pdesc: r[4], qty: r[5], cp: r[6], pp: r[7], feat: !!r[8], sw: SW[r[0]][0], swb: SW[r[0]][1],
+      bg: i % 2 === 0 ? '#f8f8f8' : '#ffffff', pfg: r[3] === 'Do not carry' ? '#767676' : '#333333', pstyle: r[3] === 'Do not carry' ? 'italic' : 'normal',
+      open: () => this.setState({ detail: r[8], img: 0, menu: false, catView: false }) }));
+    const curRow = R.find((r) => r[8] === (S.detail || 'gown')) || R[2];
+    const cur = { sku: curRow[1], desc: curRow[2] };
+    const org = S.info[0] || 'Riverside Dental Group';
+    const custEmail = S.info[2] || '';
+    Object.keys(P).forEach((k) => { P[k].src = P[k].mfr; });
+    const CAT = {
+      gown: { name: 'Isolation Gown, AAMI Level 2, Universal, Yellow, 10/Pk', sku: 'DS1-IG2Y-10', img: 0, desc: 'Yellow AAMI Level 2 isolation gown in a universal size with knit cuffs and waist ties. Sold 10 per pack.' },
+      shield: { name: 'Face Shield, Full Length, Anti-Fog, Disposable, 24/Pk', sku: 'DS1-FSFL-24', img: 0, desc: 'Full-length disposable face shield with anti-fog coating and foam headband. Sold 24 per pack.' },
+      art: { name: 'Articaine 4% w/ Epi 1:100,000, 1.7 mL Cartridges, 50/Bx', sku: 'DS1-ART4-50', img: 0, desc: 'Articaine HCl 4% with epinephrine 1:100,000 dental cartridges, 1.7 mL. Rx only. Sold 50 per box.' }
+    };
+    const pm = P[S.detail] || P.gown;
+    const cid = S.detail || 'gown';
+    const pd = S.catView ? { ...pm, name: CAT[cid].name, sku: CAT[cid].sku, src: 'Demo Supplier01 catalog', imgs: [pm.imgs[CAT[cid].img]], docs: {}, desc: CAT[cid].desc } : pm;
+    const specs = (rep) => pd.specs.filter((s) => rep || s[1] !== 'Proposed price').map((s) => ({ v: s[0], k: s[1] }));
+    const labels = ['Search or upload purchase history files', 'Enter basic customer organization information', 'Get an instant price report'];
+    const at = { upload: 0, info: 1, attrs: 1, loading: 2, results: 3 }[S.step] || 0;
+    const steps = labels.map((label, i) => { const done = i < at, curS = i === at;
+      return { label, mark: done ? '✓' : String(i + 1), dot: done || curS ? '#000000' : '#c4c4c4', lineL: i === 0 ? 'transparent' : (i <= at ? '#000000' : '#c4c4c4'), lineR: i === 2 ? 'transparent' : (i < at ? '#000000' : '#c4c4c4') }; });
+    const FL = [['Organization Name', 'Riverside Dental Group'], ['Organization Address', '1200 Riverside Ave, Austin, TX'], ['Email', 'jordan@riversidedental.com'], ['Phone Number', '(512) 555-0142']];
+    const fields = FL.map((f, i) => ({ id: 'f' + i, label: f[0], ph: f[1], value: S.info[i], change: (e) => { const v = e.target.value; this.setState((st) => { const info = st.info.slice(); info[i] = v; return { info }; }); } }));
+    const FILES = [
+      ['Apex_Medical_Invoice_INV-10482.pdf', 'PDF', '#c0392b', 'PDF document', '284 KB', 'Oct 12, 2026'],
+      ['Purchase_History_Report_Q3_2026.xlsx', 'XLSX', '#1e7d45', 'Excel workbook', '96 KB', 'Oct 1, 2026'],
+      ['Shopping_Cart_Screenshot.png', 'PNG', '#2f6fd6', 'PNG image', '1.2 MB', 'Oct 20, 2026'],
+      ['Purchase_Order_PO-7731.pdf', 'PDF', '#c0392b', 'PDF document', '158 KB', 'Sep 28, 2026'],
+      ['Supply_Order_Export.csv', 'CSV', '#5f6b73', 'CSV document', '42 KB', 'Sep 15, 2026'],
+      ['Invoice_Scan_Sept_2026.jpg', 'JPG', '#2f6fd6', 'JPEG image', '2.4 MB', 'Sep 30, 2026']
+    ];
+    const FORMS = [['Retail discount 15%', '#8edbd7'], ['Margin 60%', '#b8edf0'], ['Margin 20%', '#dccbe9'], ['Competitor discount 50%', '#d9a7d4'], ['Retail discount 10%', '#f5bd9f']];
+    const selIds = Object.keys(S.sel).filter((k) => S.sel[k]).map(Number);
+    const pickFiles = FILES.map((f, i) => { const on = !!S.sel[i]; return { name: f[0], ext: f[1], color: f[2], kind: f[3], size: f[4], date: f[5], pressed: on ? 'true' : 'false',
+      bg: on ? '#2f6fd6' : '#ffffff', fg: on ? '#ffffff' : '#333333', box: on ? '#ffffff' : '#9e9e9e', tick: on ? '✓' : '', toggle: () => this.setState((st) => ({ sel: { ...st.sel, [i]: !st.sel[i] } })) }; });
+    const upFiles = S.files.map((i, k) => ({ name: FILES[i][0], ext: FILES[i][1], color: FILES[i][2], remove: () => this.setState((st) => ({ files: st.files.filter((_, j) => j !== k) })) }));
+    const sRows = S.rows.map((r, i) => ({ ...r, remove: () => this.setState((st) => ({ rows: st.rows.filter((_, j) => j !== i) })) }));
+    const docs = pd.docs || {};
+    const mainImg = pd.imgs[Math.min(S.img, pd.imgs.length - 1)];
+    const custTable = [['Customer', 'Jordan Lee'], ['Organization', org], ['Address', S.info[1] || '1200 Riverside Ave, Austin, TX'], ['Email', custEmail || 'jordan@riversidedental.com'], ['Phone', S.info[3] || '(512) 555-0142']].map((c) => ({ k: c[0], v: c[1] }));
+    const curTable = [['Your SKU', cur.sku], ['Supplier', 'Apex Medical Distributors'], ['Your price', '$100.00'], ['Matched to', pd.sku]].map((c) => ({ k: c[0], v: c[1] }));
+    const focusBack = () => this.later(() => { const b = document.getElementById('kb-back'); if (b) b.focus({ preventScroll: true }); }, 60);
+    const go = (step) => { if (step === 'mfrEmail' || step === 'custEmail' || step === 'custPage') focusBack(); this.goTo(step, S); };
+    this.goTo = (step, S0) => this.setState({ catView: false, step, detail: step === 'custPage' ? S.detail : (step === 'review' ? null : S.detail), menu: false, custMenu: false, request: false, sent: false, share: false, shared: false, doc: null, showAi: false, lb: false });
+    return {
+      onViewKey: (e) => { const tag = (e.target && e.target.tagName) || ''; if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return; if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Escape') { e.preventDefault(); this.setState({ step: 'review', detail: null, menu: false, custMenu: false, request: false, sent: false, share: false, shared: false, doc: null, showAi: false, lb: false }); } },
+      pm, pmThumb: pm.imgs[0], hasDocs: !S.catView, noDocs: !!S.catView, catChecked: S.catView ? 'true' : 'false', catLabel: S.catView ? 'Catalog product detail' : 'Manufacturer product detail',
+      swTrack: S.catView ? '#a9e7e7' : '#d6d6d6', swKnob: S.catView ? '#21c5c4' : '#ffffff', swKnobX: S.catView ? '20px' : '2px',
+      toggleCat: () => this.setState((st) => ({ catView: !st.catView, img: 0, lb: false })),
+      steps, fields, tRows, sRows, pickFiles, upFiles, custTable, curTable, cur, org, pd,
+      isWidget: ['upload', 'info', 'attrs', 'loading', 'results'].indexOf(S.step) >= 0,
+      isUpload: S.step === 'upload', isInfo: S.step === 'info', isAttrs: S.step === 'attrs', isLoading: S.step === 'loading', isResults: S.step === 'results',
+      isReview: S.step === 'review', isReport: S.step === 'report', isMfrEmail: S.step === 'mfrEmail', isCustEmail: S.step === 'custEmail', isCustPage: S.step === 'custPage',
+      hasFiles: S.files.length > 0, fileCount: S.files.length + ' of ' + S.files.length,
+      fileLine: S.files.length ? S.files.length + ' of ' + S.files.length + ' files were uploaded and included in the estimation' : 'The searched products were included in the estimation',
+      hasRows: S.rows.length > 0, rowCount: S.rows.length + (S.rows.length === 1 ? ' product' : ' products'), q: S.q,
+      searchLabel: S.searching ? 'Searching…' : 'Search', searchBg: S.searching ? '#bdbdbd' : '#333333',
+      contBg: S.files.length || S.rows.length ? '#333333' : '#bdbdbd',
+      showPicker: S.picker, pickNote: selIds.length ? selIds.length + (selIds.length === 1 ? ' file selected' : ' files selected') : 'Select one or more files', openBg: selIds.length ? '#2f6fd6' : '#a9bfe6',
+      formulary: S.formulary, noForm: !S.formulary, hasForm: !!S.formulary, formExpanded: S.formOpen ? 'true' : 'false', formOpen: !!S.formOpen,
+      caretRot: S.formOpen ? 'rotate(180deg)' : 'none', caretBorder: S.formOpen ? '1px solid #333333' : '1px solid transparent',
+      formBg: (FORMS.find((f) => f[0] === S.formulary) || ['', '#cfeeed'])[1],
+      formOpts: FORMS.map((f) => ({ name: f[0], bg: f[1], selected: S.formulary === f[0] ? 'true' : 'false', pick: () => this.setState({ formulary: f[0], formOpen: false }) })),
+      toggleForm: () => this.setState((st) => ({ formOpen: !st.formOpen })), clearForm: () => this.setState({ formulary: '', formOpen: false }), formLine: S.formulary ? ' · Formulary: ' + S.formulary : '',
+      showDetail: S.step === 'review' && !!S.detail && !S.doc && !S.request && !S.share, menu: S.menu, custMenu: S.custMenu,
+      mainImg, pdThumb: pd.imgs[0], thumbs: pd.imgs.map((src, i) => ({ src, border: i === S.img ? '#21c5c4' : '#e5e5e5', pick: () => this.setState({ img: i }) })),
+      repSpecs: specs(true), custSpecs: specs(false), features: pd.features.map((t) => ({ t })),
+      showLb: S.lb, lbCount: (Math.min(S.img, pd.imgs.length - 1) + 1) + ' / ' + pd.imgs.length,
+      showDoc: !!S.doc, docTitle: S.doc === 'video' ? 'Product video' : (docs[S.doc] ? docs[S.doc][0] : ''), docIsPage: S.doc === 'spec' || S.doc === 'sds', docSrc: docs[S.doc] && S.doc !== 'video' ? docs[S.doc][1] : '',
+      docIsVideo: S.doc === 'video', videoSrc: docs.video || '', notPlaying: !S.playing, progress: S.playing ? '35%' : '0%',
+      showAi: S.showAi, aiSub: S.step === 'custPage' ? pd.name + ' vs. what you buy now' : pd.name + ' vs. what the customer buys now',
+      aiText: (S.step === 'custPage' ? 'Compared with what you buy now, ' : 'Compared with what the customer buys now, ') + pd.ai,
+      showRequest: S.request, notSent: !S.sent, sent: S.sent, repSent: S.reqFrom === 'rep',
+      reqSub: S.reqFrom === 'rep' ? 'Confirm the customer’s details. We’ll send the request to ' + pd.mfr + ' on their behalf.' : 'Confirm your details and we’ll send your request to ' + pd.mfr + '.',
+      sentLine: S.reqFrom === 'rep' ? pd.mfr + ' has the request and ' + org + '’s details.' : pd.mfr + ' has your request and contact details.',
+      showShare: S.share, notShared: !S.shared, shared: S.shared, shareEmail: S.shareEmail, shareTo: S.shareEmail || custEmail || 'jordan@riversidedental.com', shareBg: S.shareEmail.trim() ? '#333333' : '#bdbdbd',
+      openPicker: () => this.setState({ picker: true, sel: {} }), closePicker: () => this.setState({ picker: false }),
+      openFiles: () => { if (!selIds.length) return; this.setState((st) => { const files = st.files.slice(); selIds.forEach((i) => { if (files.indexOf(i) < 0) files.push(i); }); return { files, picker: false, sel: {} }; }); },
+      onQ: (e) => this.setState({ q: e.target.value }),
+      doSearch: () => { if (!S.q.trim() || S.searching) return; const term = S.q.trim(); this.setState({ searching: true });
+        this.later(() => this.setState((st) => ({ searching: false, q: '', rows: st.rows.concat([{ sku: term.toUpperCase(), desc: /fs-?0918/i.test(term) ? 'Face Shield w/ Headband, 9 in' : term, psku: 'DEM-1006', pdesc: 'Disposable Face Shields, Full-Length, Anti-Fog' }]) })), 1200); },
+      toInfo: () => { if (S.files.length || S.rows.length) this.setState({ step: 'info' }); }, backUpload: () => this.setState({ step: 'upload' }),
+      toAttrs: () => this.setState({ step: 'attrs' }), backInfo: () => this.setState({ step: 'info' }),
+      
+      checkSavings: () => { this.setState({ step: 'loading' }); this.later(() => this.setState({ step: 'results' }), 1600); },
+      toReview: () => go('review'), toReport: () => go('report'), toResults: () => go('results'), saveRegen: () => go('results'),
+      restart: () => this.setState({ step: 'upload', files: [], rows: [], info: ['', '', '', ''], formulary: '', detail: null }),
+      closeDetail: () => this.setState({ detail: null, menu: false }),
+      toggleMenu: () => this.setState((st) => ({ menu: !st.menu })), toggleCustMenu: () => this.setState((st) => ({ custMenu: !st.custMenu })),
+      openAi: () => this.setState({ menu: false, custMenu: false, showAi: true }), closeAi: () => this.setState({ showAi: false }),
+      openLb: () => this.setState({ lb: true }), closeLb: () => this.setState({ lb: false }),
+      prevImg: () => this.setState((st) => ({ img: (st.img - 1 + pd.imgs.length) % pd.imgs.length })), nextImg: () => this.setState((st) => ({ img: (st.img + 1) % pd.imgs.length })),
+      openSpec: () => this.setState({ doc: 'spec' }), openSds: () => this.setState({ doc: 'sds' }), openVideo: () => this.setState({ doc: 'video', playing: false }),
+      closeDoc: () => this.setState({ doc: null, playing: false }), play: () => this.setState({ playing: true }),
+      repRequest: () => this.setState({ request: true, sent: false, reqFrom: 'rep' }), custRequest: () => this.setState({ request: true, sent: false, reqFrom: 'customer' }),
+      closeRequest: () => this.setState({ request: false, sent: false }), sendRequest: () => this.setState({ sent: true }),
+      toMfrEmail: () => go('mfrEmail'),
+      openShare: () => this.setState({ menu: false, share: true, shared: false, shareEmail: S.shareEmail || custEmail }), closeShare: () => this.setState({ share: false, shared: false }),
+      onShareEmail: (e) => this.setState({ shareEmail: e.target.value }), doShare: () => { if (S.shareEmail.trim()) this.setState({ shared: true }); },
+      toCustEmail: () => go('custEmail'), toCustPage: () => go('custPage'),
+      backToReview: () => this.setState({ step: 'review', detail: null, menu: false, custMenu: false, request: false, sent: false, share: false, shared: false, doc: null, showAi: false, lb: false })
+    };
+  }
+}
+</script>
+</body>
+</html>
