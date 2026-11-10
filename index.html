@@ -67,9 +67,9 @@ button,input,select,textarea{font-family:inherit}
 <div style="border: 1px solid #e5e5e5; border-radius: 8px">
 <div style="min-width: 640px">
 <div style="padding: 10px 14px; background: #fafafa; border-bottom: 1px solid #e5e5e5; font-size: 12px; color: #595959">Added · {{rowCount}}</div>
-<div style="display: grid; grid-template-columns: 110px 1fr 170px 1fr 40px 36px; gap: 10px; padding: 10px 14px; font-size: 11px; color: #595959"><div>Current SKU</div><div>Current SKU Description</div><div>Proposed SKU</div><div>Proposed SKU Description</div><div></div><div></div></div>
+<div style="display: grid; grid-template-columns: 110px 1fr 160px 1fr 110px 40px 36px; gap: 10px; padding: 10px 14px; font-size: 11px; color: #595959"><div>Current SKU</div><div>Current SKU Description</div><div>Proposed SKU</div><div>Proposed SKU Description</div><div>Proposed Catalog Price</div><div></div><div></div></div>
 <sc-for list="{{sRows}}" as="r" hint-placeholder-count="1">
-<div style="position: relative; display: grid; grid-template-columns: 110px 1fr 170px 1fr 40px 36px; gap: 10px; align-items: center; padding: 10px 14px; background: #f4f4f4; font-size: 13px"><div>{{r.sku}}</div><div>{{r.desc}}</div><div style="display: flex; align-items: center; gap: 4px"><sc-if value="{{r.feat}}" hint-placeholder-val="{{ true }}"><button type="button" aria-label="Show featured product" onClick="{{r.open}}" style="width: 32px; height: 32px; flex: none; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center"><img src="./assets/3d8389d2620b9ee2a10c698ef080e507.png" alt="" width="18" height="18" style="display: block"></button></sc-if><span>{{r.psku}}</span></div><div>{{r.pdesc}}</div><button type="button" aria-label="More actions" onClick="{{r.menu}}" style="width: 40px; height: 40px; border: 0; background: transparent; cursor: pointer; font-size: 20px; color: #333333">⋮</button><sc-if value="{{r.menuOpen}}" hint-placeholder-val="{{ false }}"><div style="position: absolute; right: 50px; top: 46px; z-index: 6; min-width: 230px; padding: 6px 0; background: #ffffff; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.18)"><button type="button" class="menu-item" onClick="{{r.details}}" style="display: block; width: 100%; height: 44px; padding: 0 16px; border: 0; text-align: left; font-size: 14px; color: #333333; cursor: pointer">Show Proposed SKU details</button></div></sc-if><button type="button" aria-label="Remove product" onClick="{{r.remove}}" style="width: 32px; height: 32px; border: 0; background: transparent; cursor: pointer; color: #595959; font-size: 18px">×</button></div>
+<div style="position: relative; display: grid; grid-template-columns: 110px 1fr 160px 1fr 110px 40px 36px; gap: 10px; align-items: center; padding: 10px 14px; background: #f4f4f4; font-size: 13px"><div>{{r.sku}}</div><div>{{r.desc}}</div><div style="display: flex; align-items: center; gap: 4px"><sc-if value="{{r.feat}}" hint-placeholder-val="{{ true }}"><button type="button" aria-label="Show featured product" onClick="{{r.open}}" style="width: 32px; height: 32px; flex: none; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center"><img src="./assets/3d8389d2620b9ee2a10c698ef080e507.png" alt="" width="18" height="18" style="display: block"></button></sc-if><span>{{r.psku}}</span></div><div>{{r.pdesc}}</div><div>{{r.price}}</div><button type="button" aria-label="More actions" onClick="{{r.menu}}" style="width: 40px; height: 40px; border: 0; background: transparent; cursor: pointer; font-size: 20px; color: #333333">⋮</button><sc-if value="{{r.menuOpen}}" hint-placeholder-val="{{ false }}"><div style="position: absolute; right: 50px; top: 46px; z-index: 6; min-width: 230px; padding: 6px 0; background: #ffffff; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.18)"><button type="button" class="menu-item" onClick="{{r.details}}" style="display: block; width: 100%; height: 44px; padding: 0 16px; border: 0; text-align: left; font-size: 14px; color: #333333; cursor: pointer">Show Proposed SKU details</button></div></sc-if><button type="button" aria-label="Remove product" onClick="{{r.remove}}" style="width: 32px; height: 32px; border: 0; background: transparent; cursor: pointer; color: #595959; font-size: 18px">×</button></div>
 </sc-for>
 </div>
 </div>
@@ -122,6 +122,25 @@ button,input,select,textarea{font-family:inherit}
 <sc-if value="{{isResults}}" hint-placeholder-val="{{ false }}">
 <div style="min-height: 420px; display: flex; flex-direction: column; gap: 28px; padding-top: 24px">
 <div style="text-align: center; display: flex; flex-direction: column; gap: 8px"><div style="font-size: 16px; color: #595959">Estimated savings</div><div style="font-size: 40px; font-weight: 700">$2,080.20</div><div style="font-size: 13px">{{fileLine}}</div><div style="font-size: 11px; font-style: italic; color: #595959">Instant savings analyses are auto-generated projections using latest AI technologies and will be reviewed by staff to verify accuracy.</div></div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div><div style="font-size: 16px; font-weight: 700">Customer’s products, cross-referenced</div><div style="font-size: 12px; color: #595959; margin-top: 4px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap">Click <img src="./assets/3d8389d2620b9ee2a10c698ef080e507.png" alt="the featured badge" width="18" height="18"> next to a proposed SKU to see a featured product.</div></div>
+<div style="border: 1px solid #e5e5e5; border-radius: 8px; overflow-x: auto">
+<div style="min-width: 1400px">
+<div style="padding: 10px 14px; background: #fafafa; border-bottom: 1px solid #e5e5e5; font-size: 12px; color: #595959">Matched · {{xCount}} products</div>
+<div style="display: grid; grid-template-columns: 28px 90px 230px 170px 120px 110px 160px 250px 90px 44px; gap: 10px; padding: 10px 14px; font-size: 11px; color: #595959; align-items: center"><div style="width: 16px; height: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 1px"><i style="background: #f2994a"></i><i style="background: #27ae60"></i><i style="background: #bdbdbd"></i><i style="background: #ffe70f"></i></div><div>Current SKU</div><div>Current SKU Description</div><div>Supplier Name</div><div>Current MFG Name</div><div>Current MFG SKU</div><div>Proposed SKU</div><div>Proposed SKU Description</div><div>Proposed Price</div><div></div></div>
+<sc-for list="{{xRows}}" as="r" hint-placeholder-count="7">
+<div style="position: relative; display: grid; grid-template-columns: 28px 90px 230px 170px 120px 110px 160px 250px 90px 44px; gap: 10px; padding: 6px 14px; align-items: center; background: {{r.bg}}; font-size: 13px">
+<div style="width: 18px; height: 18px; border-radius: 2px; box-sizing: border-box; background: {{r.sw}}; border: 1px solid {{r.swb}}"></div>
+<div>{{r.sku}}</div><div>{{r.desc}}</div><div>Apex Medical Distributors</div><div>{{r.mfg}}</div><div>{{r.mfgsku}}</div>
+<div style="display: flex; align-items: center; gap: 4px; color: {{r.pfg}}; font-style: {{r.pstyle}}"><sc-if value="{{r.feat}}" hint-placeholder-val="{{ true }}"><button type="button" aria-label="Show featured product" onClick="{{r.open}}" style="width: 32px; height: 32px; flex: none; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center"><img src="./assets/3d8389d2620b9ee2a10c698ef080e507.png" alt="" width="18" height="18" style="display: block"></button></sc-if><span>{{r.psku}}</span></div>
+<div style="color: {{r.pfg}}; font-style: {{r.pstyle}}">{{r.pdesc}}</div><div>{{r.pp}}</div>
+<div><sc-if value="{{r.hasProp}}" hint-placeholder-val="{{ true }}"><button type="button" aria-label="More actions" onClick="{{r.menu}}" style="width: 40px; height: 40px; border: 0; background: transparent; cursor: pointer; font-size: 20px; color: #333333">⋮</button></sc-if></div>
+<sc-if value="{{r.menuOpen}}" hint-placeholder-val="{{ false }}"><div style="position: absolute; right: 50px; {{r.menuPos}}; z-index: 5; min-width: 230px; padding: 6px 0; background: #ffffff; border-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,0.18)"><button type="button" class="menu-item" onClick="{{r.details}}" style="display: block; width: 100%; height: 44px; padding: 0 16px; border: 0; text-align: left; font-size: 14px; color: #333333; cursor: pointer">Show Proposed SKU details</button></div></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
 <div style="margin-top: auto; padding-top: 16px; display: flex; flex-direction: column; gap: 8px"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px"><button type="button" onClick="{{toReview}}" style="width: 100%; height: 52px; border: 0; border-radius: 4px; background: #ebebeb; color: #333333; font-size: 17px; cursor: pointer">Review matches</button><button type="button" onClick="{{toReport}}" style="width: 100%; height: 52px; border: 0; border-radius: 4px; background: #333333; color: #ffffff; font-size: 17px; cursor: pointer">View report</button></div><button type="button" onClick="{{restart}}" style="align-self: center; height: 44px; padding: 0 16px; border: 0; background: transparent; font-size: 16px; color: #333333; cursor: pointer">Start again</button></div>
 </div>
 </sc-if>
@@ -140,7 +159,7 @@ button,input,select,textarea{font-family:inherit}
 <div style="display: grid; grid-template-columns: 96px 28px 100px 260px 170px 180px 300px 70px 90px 90px; gap: 10px; padding: 14px 16px; font-size: 12px; color: #595959; border-bottom: 1px solid #e5e5e5"><div></div><div></div><div>Current SKU</div><div>Current SKU Description</div><div>Supplier Name</div><div>Proposed SKU</div><div>Proposed SKU Description</div><div>Quantity</div><div>Current Price</div><div>Proposed Price</div></div>
 <sc-for list="{{tRows}}" as="r" hint-placeholder-count="7">
 <div style="display: grid; grid-template-columns: 96px 28px 100px 260px 170px 180px 300px 70px 90px 90px; gap: 10px; align-items: center; padding: 6px 16px; background: {{r.bg}}; font-size: 13px">
-<div style="display: flex; gap: 2px"><button type="button" aria-label="Match info" style="width: 30px; height: 40px; border: 0; background: transparent; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16v.5" stroke-linecap="round"></path></svg></button><button type="button" aria-label="Adjust match" style="width: 30px; height: 40px; border: 0; background: transparent; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#444444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg></button><button type="button" aria-label="Bookmark" style="width: 30px; height: 40px; border: 0; background: transparent; padding: 0"><svg width="16" height="18" viewBox="0 0 20 24" fill="none" stroke="#444444" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h12v20l-6-5-6 5z"></path></svg></button></div>
+<div style="display: flex; gap: 2px"><button type="button" aria-label="Match info" style="width: 30px; height: 40px; border: 0; background: transparent; padding: 0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#555555" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5M12 16v.5" stroke-linecap="round"></path></svg></button><button type="button" aria-label="Adjust match" onClick="{{r.adjust}}" style="width: 30px; height: 40px; border: 0; border-radius: 4px; background: transparent; padding: 0; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#444444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg></button><button type="button" aria-label="Bookmark" style="width: 30px; height: 40px; border: 0; background: transparent; padding: 0"><svg width="16" height="18" viewBox="0 0 20 24" fill="none" stroke="#444444" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 2h12v20l-6-5-6 5z"></path></svg></button></div>
 <div style="width: 18px; height: 18px; border-radius: 2px; box-sizing: border-box; background: {{r.sw}}; border: 1px solid {{r.swb}}"></div>
 <div>{{r.sku}}</div><div>{{r.desc}}</div><div>Apex Medical Distributors</div>
 <div style="display: flex; align-items: center; gap: 4px; color: {{r.pfg}}; font-style: {{r.pstyle}}"><sc-if value="{{r.feat}}" hint-placeholder-val="{{ false }}"><button type="button" aria-label="Show featured product" onClick="{{r.open}}" style="width: 32px; height: 32px; flex: none; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center"><img src="./assets/3d8389d2620b9ee2a10c698ef080e507.png" alt="" width="18" height="18" style="display: block"></button></sc-if><span>{{r.psku}}</span></div>
@@ -240,6 +259,36 @@ button,input,select,textarea{font-family:inherit}
 <div><h2 style="margin: 0; font-size: 18px">Description</h2><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.6">{{pd.desc}}</p></div>
 <div><h2 style="margin: 0; font-size: 18px">Key features</h2><ul style="margin: 8px 0 0; padding-left: 20px; font-size: 14px; line-height: 1.7"><sc-for list="{{features}}" as="f" hint-placeholder-count="4"><li>{{f.t}}</li></sc-for></ul></div>
 </div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showAdj}}" hint-placeholder-val="{{ false }}">
+<div style="position: fixed; inset: 0; z-index: 18; background: rgba(51,51,51,0.45); display: flex; justify-content: center; align-items: flex-start; padding: 40px 16px; box-sizing: border-box">
+<div role="dialog" aria-label="Adjust Match" style="width: 100%; max-width: 1120px; max-height: calc(100vh - 80px); display: flex; flex-direction: column; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); overflow: hidden">
+<div style="display: flex; align-items: center; justify-content: space-between; padding: 18px 16px 18px 24px; border-bottom: 1px solid #eeeeee"><h2 style="margin: 0; font-size: 20px">Adjust Match</h2><button type="button" aria-label="Close" onClick="{{closeAdj}}" style="width: 44px; height: 44px; border: 0; background: transparent; font-size: 24px; color: #555555; cursor: pointer">×</button></div>
+<div style="flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 18px">
+<div style="border: 1px solid #e5e5e5; border-radius: 6px; overflow-x: auto"><div style="min-width: 900px">
+<div style="display: grid; grid-template-columns: 110px 1.6fr 1.1fr 0.9fr 0.8fr 0.7fr 0.6fr 0.8fr; gap: 12px; padding: 12px 16px; font-size: 12px; color: #595959; border-bottom: 1px solid #eeeeee"><div>Current SKU</div><div>Current SKU Description</div><div>Supplier Name</div><div>MFG Name</div><div>MFG SKU</div><div>Package Qty</div><div>UoM</div><div>Current Price</div></div>
+<div style="display: grid; grid-template-columns: 110px 1.6fr 1.1fr 0.9fr 0.8fr 0.7fr 0.6fr 0.8fr; gap: 12px; padding: 14px 16px; font-size: 13px"><div>{{adjCurSku}}</div><div>{{adjCurDesc}}</div><div>Apex Medical Distributors</div><div>{{adjCurMfg}}</div><div>{{adjCurMfgSku}}</div><div>-</div><div>-</div><div>100.00</div></div>
+</div></div>
+<div style="border-top: 1px dashed #cccccc"></div>
+<h3 style="margin: 0; font-size: 16px">Choose Preferred Match</h3>
+<input aria-label="Search by SKU, Product Name, etc." value="{{adjQ}}" onChange="{{onAdjQ}}" placeholder="Search by SKU, Product Name, etc." style="height: 44px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dcdcdc; border-radius: 6px; font-size: 14px; color: #333333">
+<div role="radiogroup" aria-label="Proposed matches" style="border: 1px solid #e5e5e5; border-radius: 6px; overflow-x: auto"><div style="min-width: 960px">
+<div style="display: grid; grid-template-columns: 30px 150px 2fr 1.1fr 1fr 0.7fr 0.6fr 0.8fr; gap: 12px; padding: 12px 16px; font-size: 12px; color: #595959; border-bottom: 1px solid #eeeeee"><div></div><div>Proposed SKU</div><div>Proposed SKU Description</div><div>MFG Name</div><div>MFG SKU</div><div>Package Qty</div><div>UoM</div><div>Proposed Price</div></div>
+<sc-for list="{{adjList}}" as="o" hint-placeholder-count="3">
+<div style="display: grid; grid-template-columns: 30px 150px 2fr 1.1fr 1fr 0.7fr 0.6fr 0.8fr; gap: 12px; align-items: center; padding: 6px 16px; min-height: 52px; background: {{o.bg}}; font-size: 13px">
+<button type="button" role="radio" aria-checked="{{o.checked}}" aria-label="Choose {{o.psku}}" onClick="{{o.pick}}" style="width: 30px; height: 30px; padding: 0; border: 0; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center"><span style="width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box; border: 2px solid {{o.ring}}; background: {{o.dot}}; box-shadow: inset 0 0 0 3px #ffffff"></span></button>
+<div>{{o.psku}}</div>
+<div><sc-if value="{{o.hasId}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{o.open}}" style="padding: 0; min-height: 32px; border: 0; background: transparent; text-align: left; font-size: 13px; color: #333333; text-decoration: underline; text-decoration-color: #bdbdbd; cursor: pointer">{{o.pdesc}}</button></sc-if><sc-if value="{{o.noId}}" hint-placeholder-val="{{ false }}"><span>{{o.pdesc}}</span></sc-if></div>
+<div style="color: {{o.mfgColor}}">{{o.mfg}}</div><div>{{o.mfgsku}}</div><div>{{o.qty}}</div><div>{{o.uom}}</div><div>{{o.price}}</div>
+</div>
+</sc-for>
+</div></div>
+<div style="font-size: 12px; color: #595959">Click a product name to see its details.</div>
+</div>
+<div style="display: flex; justify-content: flex-end; align-items: center; gap: 16px; padding: 16px 24px; border-top: 1px solid #eeeeee"><button type="button" onClick="{{closeAdj}}" style="height: 44px; padding: 0 16px; border: 0; background: transparent; font-size: 16px; color: #333333; cursor: pointer">Cancel</button><button type="button" onClick="{{saveAdj}}" aria-disabled="{{saveDisabled}}" style="height: 48px; padding: 0 40px; border: 0; border-radius: 4px; background: {{saveBg}}; color: #ffffff; font-size: 16px; cursor: pointer">Save</button></div>
 </div>
 </div>
 </sc-if>
@@ -389,7 +438,7 @@ button,input,select,textarea{font-family:inherit}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { sMenu: null, cart: {}, toast: '', toastSub: '', toastKind: 'added', shares: {}, viewEmail: '', step: 'upload', files: [], picker: false, sel: {}, q: '', searching: false, rows: [], info: ['', '', '', ''], formulary: '',
+    this.state = { adj: null, adjSel: null, adjQ: '', overrides: {}, rMenu: null, sMenu: null, cart: {}, toast: '', toastSub: '', toastKind: 'added', shares: {}, viewEmail: '', step: 'upload', files: [], picker: false, sel: {}, q: '', searching: false, rows: [], info: ['', '', '', ''], formulary: '',
       detail: null, img: 0, lb: false, menu: false, custMenu: false, showAi: false, doc: null, playing: false,
       request: false, sent: false, reqFrom: 'rep', share: false, shared: false, shareEmail: '' };
     this.timers = [];
@@ -468,9 +517,39 @@ class Component extends DCLogic {
     const ESG = ['y', 'CLX-2036', 'Enzymatic Instrument Spray Gel, 24 oz', 'DEM-ESG-16', 'Enzymatic Spray Foam, 16 oz', '1', '100.00', '12.50', 'esg'];
     const RX = R.concat([ESG]);
     if (S.rows.some((r) => r.fid === 'esg')) R.push(ESG);
+    const OPTS = {
+      'CLX-2004': [['DEM-1004', 'Isolation Gowns, AAMI Level 2, Universal Size, Yellow', 'Demo Manufacturer01', 'DEM-1004', '10', 'Each', '18.95', 'gown', true], ['DEM270-8004-1', 'Standard Barrier Gown/One Size Fits All (10Pcs/Bag), White', 'Demo Brand 04', '2229442', '10', 'Bag', '4.50', 'pg'], ['DEM270-8004-2', 'Standard Barrier Gown/One Size Fits All (10Pcs/Bag), Blue', 'Demo Brand 04', '2229473', '10', 'Bag', '4.50', null]],
+      'CLX-2006': [['DEM-1006', 'Disposable Face Shields, Full-Length, Anti-Fog', 'Demo Manufacturer01', 'DEM-1006', '24', 'Each', '19.95', 'shield', true], ['DEM500-GCSS9B', 'Face Shields w/ Elastic Headband, Full Length (9 inch), 72/cs', 'Demo Brand 05', 'GCSS9B', '72', 'Case', '108.00', 'ps'], ['DEM440-1964', 'Face Shield, Full Length, Disposable, 24/pk', 'Demo Brand 12', '1964', '24', 'Pack', '37.50', null]],
+      'CLX-2010': [['DEM-HV-ART4-100', 'Articaine HCl 4% with Epinephrine 1:100,000, 1.7 mL', 'Demo MFG 01', 'DEM-HV-ART4-100', '50', 'Box', '44.75', 'art', true], ['DEM440-ART4', 'Articaine HCl 4% w/ Epinephrine 1:100,000, 1.7 mL, 50/bx', 'Demo Brand 06', 'ART4-50', '50', 'Box', '52.00', 'pa'], ['DEM-02A1400', 'Articaine 4% w/EPI 1.7 mL INJ 1:100 Gold', 'Demo Brand 13', '02A1400', '300', 'Box', '40.00', null]],
+      'CLX-2036': [['DEM-PV-ESG24', 'Enzymatic Pre-Soak Spray Gel, 24 oz', 'Demo MFG 01', 'DEM-PV-ESG24', '1', 'BT', '17.95', 'esg', true], ['DEM-ESG-16', 'Enzymatic Spray Foam, 16 oz', 'Demo Brand 07', 'ESG-16', '1', 'Can', '12.50', 'pe'], ['DEM-ENZ-32', 'Enzymatic Instrument Detergent, 32 oz', 'Demo Brand 14', 'ENZ-32', '1', 'Bottle', '21.00', null]],
+      'CLX-2021': [['DEM650-27416DX', 'IMAGE ALGINATE FAST SET CANISTER, 1 X 1 LB.', 'Demo Brand 08', '27416DX', '1', 'Canister', '7.50', 'pal'], ['DEM650-27417', 'Alginate Impression Material, Regular Set, 1 lb', 'Demo Brand 08', '27417', '1', 'Canister', '8.25', null], ['DEM-ALG-500', 'Alginate Impression Material, Fast Set, 500 g', 'Demo Brand 15', 'ALG-500', '1', 'Bag', '6.90', null]],
+      'CLX-2022': [['DEM290-PS-O', 'Endodontic Pressure Syringe only, with handle', 'Demo Brand 09', 'PS-O', '1', 'Each', '66.50', 'psy'], ['DEM-SPH-AD', 'Aneroid Sphygmomanometer, Adult Cuff, Navy', 'Demo Brand 16', 'SPH-AD', '1', 'Each', '24.95', null], ['DEM-SPH-LG', 'Aneroid Sphygmomanometer, Large Adult Cuff', 'Demo Brand 16', 'SPH-LG', '1', 'Each', '27.50', null]],
+      'CLX-2023': [['DEM990-UGI-6719', 'Isolation Gowns SMS Material - Soft and Breathable, Pink, 10 pcs/bag', 'Demo Brand 10', 'UGI-6719', '10', 'Bag', '10.00', 'ppk'], ['DEM-POX-OLED', 'Pulse Oximeter, Fingertip, with OLED Display', 'Demo Brand 17', 'POX-OLED', '1', 'Each', '29.00', null], ['DEM-POX-PED', 'Pulse Oximeter, Fingertip, Pediatric', 'Demo Brand 17', 'POX-PED', '1', 'Each', '31.50', null]],
+      'CLX-20040': [['DEM-NG-M200', 'Nitrile Exam Gloves, Powder-Free, Medium, Blue, 200/bx', 'Demo Brand 11', 'NG-M200', '200', 'Box', '14.50', null], ['DEM-NG-M100', 'Nitrile Exam Gloves, Powder-Free, Medium, Blue, 100/bx', 'Demo Brand 11', 'NG-M100', '100', 'Box', '8.25', null]]
+    };
+    const OV = S.overrides || {};
+    for (let k = 0; k < R.length; k++) { const o = OV[R[k][1]]; if (o) { const r = R[k].slice(); r[3] = o[0]; r[4] = o[1]; r[7] = o[6]; r[9] = o[7] || ''; r[10] = true; R[k] = r; } }
+    const MFG = { 'CLX-20040': ['Medline', 'MDS192074'], 'CLX-2021': ['Kerr', '27416'], 'CLX-2004': ['Medline', 'MDL-8400'], 'CLX-2006': ['Medline', 'MDL-FS6'], 'CLX-2010': ['Demo Pharma 02', 'DP2-ART4-50'], 'CLX-2022': ['Demo Diagnostics', 'DD-ANR-AC'], 'CLX-2023': ['Demo Diagnostics', 'DD-OX-OLED'], 'CLX-2036': ['Demo Chem 03', 'DC3-ESG24'] };
+    const PID = { 'CLX-2004': 'pg', 'CLX-2006': 'ps', 'CLX-2010': 'pa', 'CLX-2036': 'pe', 'CLX-2021': 'pal', 'CLX-2022': 'psy', 'CLX-2023': 'ppk' };
+    const xRows = R.map((r, i) => { const dnc = r[3] === 'Do not carry'; return { sku: r[1], desc: r[2], psku: r[3], pdesc: r[4], pp: dnc ? '-' : '$' + r[7], feat: !!r[8], hasProp: r[10] ? !!r[9] : !!PID[r[1]],
+      mfg: (MFG[r[1]] || ['-', '-'])[0], mfgsku: (MFG[r[1]] || ['-', '-'])[1], sw: SW[r[0]][0], swb: SW[r[0]][1], bg: i % 2 === 0 ? '#f6f6f6' : '#ffffff',
+      pfg: dnc ? '#767676' : '#333333', pstyle: dnc ? 'italic' : 'normal', menuOpen: S.rMenu === i, menuPos: i >= 3 ? 'bottom: 44px' : 'top: 44px',
+      open: () => this.setState({ detail: r[8], img: 0, menu: false, catView: false, rMenu: null }),
+      menu: () => this.setState((st) => ({ rMenu: st.rMenu === i ? null : i })),
+      details: () => this.setState({ rMenu: null, detail: r[10] ? r[9] : PID[r[1]], img: 0, menu: false, catView: false }) }; });
     const tRows = R.map((r, i) => ({ sku: r[1], desc: r[2], psku: r[3], pdesc: r[4], qty: r[5], cp: r[6], pp: r[7], feat: !!r[8], sw: SW[r[0]][0], swb: SW[r[0]][1],
-      bg: i % 2 === 0 ? '#f8f8f8' : '#ffffff', pfg: r[3] === 'Do not carry' ? '#767676' : '#333333', pstyle: r[3] === 'Do not carry' ? 'italic' : 'normal',
+      bg: r[10] ? '#e6f4ea' : (i % 2 === 0 ? '#f8f8f8' : '#ffffff'), pfg: r[3] === 'Do not carry' ? '#767676' : '#333333', pstyle: r[3] === 'Do not carry' ? 'italic' : 'normal',
+      adjust: () => this.setState({ adj: r[1], adjSel: null, adjQ: '', menu: false }),
       open: () => this.setState({ detail: r[8], img: 0, menu: false, catView: false }) }));
+    const adjRow = S.adj ? (RX.find((x) => x[1] === S.adj) || R.find((x) => x[1] === S.adj)) : null;
+    const adjCur = adjRow ? (R.find((x) => x[1] === S.adj) || adjRow) : null;
+    const adjOpts = adjRow ? (OPTS[S.adj] || []) : [];
+    const adjQ = (S.adjQ || '').trim().toLowerCase();
+    const adjList = adjOpts.map((o, k) => ({ o, k })).filter((x) => !adjQ || (x.o[0] + ' ' + x.o[1] + ' ' + x.o[2]).toLowerCase().indexOf(adjQ) >= 0).map((x, n) => {
+      const on = S.adjSel === null ? (adjCur && adjCur[3] === x.o[0]) : S.adjSel === x.k;
+      return { psku: x.o[0], pdesc: x.o[1], mfg: x.o[2], mfgsku: x.o[3], qty: x.o[4], uom: x.o[5], price: x.o[6], hasId: !!x.o[7], noId: !x.o[7],
+        bg: x.o[8] ? '#e8f6f6' : (n % 2 === 0 ? '#ffffff' : '#f6f6f6'), mfgColor: x.o[8] ? '#1f7f7c' : '#333333', checked: on ? 'true' : 'false', dot: on ? '#333333' : '#ffffff', ring: on ? '#333333' : '#9e9e9e',
+        pick: () => this.setState({ adjSel: x.k }), open: () => { if (x.o[7]) this.setState({ detail: x.o[7], img: 0, menu: false, catView: false }); } }; });
     const curRow = RX.find((r) => r[8] === (S.detail || 'gown')) || R[2];
     const cur = { sku: curRow[1], desc: curRow[2] };
     const org = S.info[0] || 'Riverside Dental Group';
@@ -482,6 +561,10 @@ class Component extends DCLogic {
     P.ps = PROP('Face Shields w/ Elastic Headband, Full Length (9 inch), 72/cs', 'DEM500-GCSS9B', 'Demo Brand 05', [['72', 'Pkg qty'], ['Case', 'UoM'], ['9 in', 'Length']], 'Infection Control / Face Shields', 'Full-length 9 inch face shields with an elastic headband. Sold by the case of 72.', ['Full length, 9 inch', 'Elastic headband', '72 per case'], 'it’s a full-length 9 inch shield with an elastic headband, sold by the case of 72. No anti-fog coating is listed.');
     P.pa = PROP('Articaine HCl 4% w/ Epinephrine 1:100,000, 1.7 mL, 50/bx', 'DEM440-ART4', 'Demo Brand 06', [['50', 'Pkg qty'], ['Box', 'UoM'], ['1.7 mL', 'Fill volume']], 'Anesthetics / Local Anesthetic Cartridges', 'Articaine HCl 4% with epinephrine 1:100,000 dental cartridges, 1.7 mL. Rx only. 50 per box.', ['Articaine 4% with epinephrine 1:100,000', '1.7 mL cartridges', '50 per box'], 'it’s the same articaine 4% with epinephrine 1:100,000 formulation in 1.7 mL cartridges, 50 per box.');
     P.pe = PROP('Enzymatic Spray Foam, 16 oz', 'DEM-ESG-16', 'Demo Brand 07', [['1', 'Pkg qty'], ['Can', 'UoM'], ['16 oz', 'Volume'], ['Foam', 'Form']], 'Infection Control / Instrument Care / Enzymatic Cleaners', 'Enzymatic pre-soak foam in a 16 oz can for keeping soiled instruments moist before cleaning.', ['Enzymatic foam', 'Keeps instruments moist', '16 oz can'], 'it’s an enzymatic pre-soak too, but a foam in a smaller 16 oz can rather than a 24 oz spray gel.');
+    P.pal = PROP('IMAGE ALGINATE FAST SET CANISTER, 1 X 1 LB.', 'DEM650-27416DX', 'Demo Brand 08', [['1', 'Pkg qty'], ['Canister', 'UoM'], ['1 lb', 'Size']], 'Impression Materials / Alginates', 'Fast-set alginate impression material in a 1 lb canister.', ['Fast set', '1 lb canister'], 'it’s a fast-set alginate in the same 1 lb canister size.');
+    P.psy = PROP('Endodontic Pressure Syringe only, with handle', 'DEM290-PS-O', 'Demo Brand 09', [['1', 'Pkg qty'], ['Each', 'UoM']], 'Endodontics / Syringes', 'Endodontic pressure syringe with handle. Syringe only.', ['Syringe with handle'], 'it’s an endodontic pressure syringe, a different product type from the current sphygmomanometer, so this match is worth reviewing.');
+    P.ppk = PROP('Isolation Gowns SMS Material - Soft and Breathable, Pink, 10 pcs/bag', 'DEM990-UGI-6719', 'Demo Brand 10', [['10', 'Pkg qty'], ['Bag', 'UoM'], ['Pink', 'Color']], 'Infection Control / Protective Apparel / Gowns', 'Soft, breathable SMS isolation gowns in pink. 10 per bag.', ['SMS material', 'Soft and breathable', '10 per bag'], 'it’s an isolation gown, a different product type from the current pulse oximeter, so this match is worth reviewing.');
+    [['pg', '$4.50'], ['ps', '$108.00'], ['pa', '$52.00'], ['pe', '$12.50'], ['pal', '$7.50'], ['psy', '$66.50'], ['ppk', '$10.00']].forEach((x) => { P[x[0]].specs.unshift([x[1], 'Proposed catalog price']); });
     Object.keys(P).forEach((k) => { P[k].src = P[k].mfr; });
     const CAT = {
       esg: { name: 'Enzymatic Pre-Soak Spray Gel, Ready-to-Use, 24 oz Bottle', sku: 'DS1-EPS-24', img: 0, desc: 'Ready-to-use enzymatic pre-soak spray gel for soiled dental instruments. Sold by the 24 oz bottle.' },
@@ -526,6 +609,12 @@ class Component extends DCLogic {
     const go = (step) => { if (step === 'mfrEmail' || step === 'custEmail' || step === 'custPage') { focusBack(); if (S.step === 'review' || S.step === 'upload') this.setState({ returnTo: S.step }); } this.goTo(step, S); };
     this.goTo = (step, S0) => this.setState({ catView: false, step, detail: step === 'custPage' ? S.detail : (step === 'review' ? null : S.detail), menu: false, custMenu: false, request: false, sent: false, share: false, shared: false, doc: null, showAi: false, lb: false });
     return {
+      xRows, xCount: R.length,
+      showAdj: S.step === 'review' && !!S.adj, adjList, adjQ: S.adjQ || '', adjCurSku: adjRow ? adjRow[1] : '', adjCurDesc: adjRow ? adjRow[2] : '',
+      adjCurMfg: adjRow ? (MFG[adjRow[1]] || ['N/A'])[0] : '', adjCurMfgSku: adjRow ? (MFG[adjRow[1]] || ['', '-'])[1] : '',
+      saveBg: S.adjSel === null ? '#bdbdbd' : '#333333', saveDisabled: S.adjSel === null ? 'true' : 'false',
+      onAdjQ: (e) => this.setState({ adjQ: e.target.value }), closeAdj: () => this.setState({ adj: null, adjSel: null, adjQ: '' }),
+      saveAdj: () => { if (S.adjSel === null) return; const o = OPTS[S.adj][S.adjSel]; this.setState((st) => ({ overrides: { ...(st.overrides || {}), [st.adj]: o }, adj: null, adjSel: null, adjQ: '' })); },
       hasToast: !!S.toast, toast: S.toast, toastSub: S.toastSub,
       toastBg: S.toastKind === 'removed' ? '#f4f4f4' : '#e8f7ef', toastBorder: S.toastKind === 'removed' ? '#767676' : '#27ae60', toastFg: S.toastKind === 'removed' ? '#333333' : '#14532d', toastIcon: S.toastKind === 'removed' ? '#595959' : '#27ae60', toastMark: S.toastKind === 'removed' ? 'M6 12h12' : 'M5 12l5 5L20 7',
       onViewKey: (e) => { const tag = (e.target && e.target.tagName) || ''; if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return; if (e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Escape') { e.preventDefault(); this.setState({ step: S.returnTo || 'review', detail: null, menu: false, custMenu: false, request: false, sent: false, share: false, shared: false, doc: null, showAi: false, lb: false }); } },
@@ -551,9 +640,9 @@ class Component extends DCLogic {
       formBg: (FORMS.find((f) => f[0] === S.formulary) || ['', '#cfeeed'])[1],
       formOpts: FORMS.map((f) => ({ name: f[0], bg: f[1], selected: S.formulary === f[0] ? 'true' : 'false', pick: () => this.setState({ formulary: f[0], formOpen: false }) })),
       toggleForm: () => this.setState((st) => ({ formOpen: !st.formOpen })), clearForm: () => this.setState({ formulary: '', formOpen: false }), formLine: S.formulary ? ' · Formulary: ' + S.formulary : '',
-      showDetail: (S.step === 'review' || S.step === 'upload') && !!S.detail && !S.doc && !S.request && !S.share, menu: S.menu, custMenu: S.custMenu,
+      showDetail: (S.step === 'review' || S.step === 'upload' || S.step === 'results') && !!S.detail && !S.doc && !S.request && !S.share, menu: S.menu, custMenu: S.custMenu,
       mainImg, pdThumb: pd.imgs[0], thumbs: pd.imgs.map((src, i) => ({ src, border: i === S.img ? '#21c5c4' : '#e5e5e5', pick: () => this.setState({ img: i }) })),
-      repSpecs: specs(false), custSpecs: specs(false), features: pd.features.map((t) => ({ t })),
+      repSpecs: specs(!!S.catView), custSpecs: specs(false), features: pd.features.map((t) => ({ t })),
       showLb: S.lb, lbCount: (Math.min(S.img, pd.imgs.length - 1) + 1) + ' / ' + pd.imgs.length,
       showDoc: !!S.doc, docTitle: S.doc === 'video' ? 'Product video' : (docs[S.doc] ? docs[S.doc][0] : ''), docIsPage: S.doc === 'spec' || S.doc === 'sds', docSrc: docs[S.doc] && S.doc !== 'video' ? docs[S.doc][1] : '',
       docIsVideo: S.doc === 'video', videoSrc: docs.video || '', notPlaying: !S.playing, progress: S.playing ? '35%' : '0%',
@@ -567,13 +656,13 @@ class Component extends DCLogic {
       openFiles: () => { if (!selIds.length) return; this.setState((st) => { const files = st.files.slice(); selIds.forEach((i) => { if (files.indexOf(i) < 0) files.push(i); }); return { files, picker: false, sel: {} }; }); },
       onQ: (e) => this.setState({ q: e.target.value }),
       doSearch: () => { if (!S.q.trim() || S.searching) return; const term = S.q.trim(); this.setState({ searching: true });
-        this.later(() => this.setState((st) => ({ searching: false, q: '', rows: st.rows.concat([/2036|enzym|spray gel/i.test(term) ? { sku: 'CLX-2036', desc: 'Enzymatic Instrument Spray Gel, 24 oz', psku: 'DEM-ESG-16', pdesc: 'Enzymatic Spray Foam, 16 oz', pid: 'pe', fid: 'esg' } : { sku: term.toUpperCase(), desc: /fs-?0918/i.test(term) ? 'Face Shield w/ Headband, 9 in' : term, psku: 'DEM500-GCSS9B', pdesc: 'Face Shields w/ Elastic Headband, Full Length (9 inch), 72/cs', pid: 'ps', fid: 'shield' }]) })), 1200); },
+        this.later(() => this.setState((st) => ({ searching: false, q: '', rows: st.rows.concat([/2036|enzym|spray gel/i.test(term) ? { sku: 'CLX-2036', desc: 'Enzymatic Instrument Spray Gel, 24 oz', psku: 'DEM-ESG-16', pdesc: 'Enzymatic Spray Foam, 16 oz', price: '$12.50', pid: 'pe', fid: 'esg' } : { sku: term.toUpperCase(), desc: /fs-?0918/i.test(term) ? 'Face Shield w/ Headband, 9 in' : term, psku: 'DEM500-GCSS9B', pdesc: 'Face Shields w/ Elastic Headband, Full Length (9 inch), 72/cs', price: '$108.00', pid: 'ps', fid: 'shield' }]) })), 1200); },
       toInfo: () => { if (S.files.length || S.rows.length) this.setState({ step: 'info' }); }, backUpload: () => this.setState({ step: 'upload' }),
       toAttrs: () => this.setState({ step: 'attrs' }), backInfo: () => this.setState({ step: 'info' }),
       
       checkSavings: () => { this.setState({ step: 'loading' }); this.later(() => this.setState({ step: 'results' }), 1600); },
       toReview: () => go('review'), toReport: () => go('report'), toResults: () => go('results'), saveRegen: () => go('results'),
-      restart: () => this.setState({ step: 'upload', files: [], rows: [], info: ['', '', '', ''], formulary: '', detail: null }),
+      restart: () => this.setState({ overrides: {}, step: 'upload', files: [], rows: [], info: ['', '', '', ''], formulary: '', detail: null }),
       closeDetail: () => this.setState({ detail: null, menu: false }),
       toggleMenu: () => this.setState((st) => ({ menu: !st.menu })), toggleCustMenu: () => this.setState((st) => ({ custMenu: !st.custMenu })),
       openAi: () => this.setState({ menu: false, custMenu: false, showAi: true }), closeAi: () => this.setState({ showAi: false }),
